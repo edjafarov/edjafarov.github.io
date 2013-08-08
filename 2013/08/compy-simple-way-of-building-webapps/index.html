@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>compy: simple way of building webapps | @edjafarov</title>
+  <meta name="author" content="Eldar Djafarov">
+  
+  <meta name="description" content="@edjafarov blog, javascript, nodejs, compy, component">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="compy: simple way of building webapps"/>
+  <meta property="og:site_name" content="@edjafarov"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="@edjafarov" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">@edjafarov</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+<div class="alignleft" style="margin-top: 15px">
+
+
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">compy: simple way of building webapps</h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2013-08-08T06:26:05.000Z">Aug 8 2013</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p><strong>Compy</strong> is a simple, &#39;zero&#39; configuration web app builder/compiller integrated with client package manager <a href="https://github.com/component/component">component</a>.
+Although there is almost no configuration it gives you all flexibility to code the way you like.</p>
+<h3>Start</h3>
+<p>Install compy with <code>npm</code> :</p>
+<figure class="highlight lang-sh"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="comment">$</span> <span class="comment">npm</span> <span class="comment">install</span> <span class="comment">compy</span> <span class="literal">-</span><span class="comment">g
+</pre></td></tr></table></figure>
+
+<p>To start an app all you need is to tell <strong>compy</strong> where is the beginning. To do that you need <code>package.json</code> file with <code>compy.main</code> property pointing to main js file of your app.</p>
+<figure class="highlight lang-json"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>{
+  "<span class="attribute">name</span>" : <span class="value"><span class="string">"app"</span></span>,
+  "<span class="attribute">compy</span>" : <span class="value">{
+    "<span class="attribute">main</span>" : <span class="value"><span class="string">"appstart.js"</span>
+  }</span>
+}</span>
+</pre></td></tr></table></figure>
+
+<p><code>appstart.js</code> file will be executed right after the page load.</p>
+<p>To compile app, just run <code>$compy compile</code></p>
+<p><strong>Compy</strong> will generate <code>./dist</code> folder with <em>app.js</em>, <em>app.css</em> and <a href="https://github.com/edjafarov/compy/blob/master/index.html"><em>index.html</em></a>. All css in your directory will be concatenated/minified into <em>app.css</em> file.</p>
+<p>Compy have static server so you can check the result with</p>
+<figure class="highlight lang-sh"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="variable">$ </span>compy server [watch]
+</pre></td></tr></table></figure>
+
+<p>adding <em>watch</em> option will recompile the app and livereload the changes in a browser.</p>
+<h3>Components</h3>
+<p>Most powerful part of compy local require and integration with <a href="https://github.com/component/component">component</a>.</p>
+<p>To install jquery:</p>
+<figure class="highlight lang-sh"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="variable">$ </span>compy install jquerycomp/jquery
+</pre></td></tr></table></figure>
+
+<p>to use jquery in code:</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre><span class="keyword">var</span> $ = require(<span class="string">'jquery'</span>)
+$(document.body).html(<span class="string">"Hallo world"</span>);
+</pre></td></tr></table></figure>
+
+<p>Local require will work the same as in node.js</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="comment">//filename: add.js</span>
+module.exports = <span class="keyword">function</span>(a, b){
+  <span class="keyword">return</span> a + b;
+}
+</pre></td></tr></table></figure>
+
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="comment">//filename: appstart.js</span>
+<span class="keyword">var</span> add = require(<span class="string">'./add'</span>);
+add(<span class="number">2</span>,<span class="number">2</span>); <span class="comment">//4</span>
+</pre></td></tr></table></figure>
+
+<h3>Plugins</h3>
+<p><strong>compy</strong> support <a href="https://github.com/component/component">component</a>&#39;s plugins.</p>
+<ul>
+<li><a href="https://github.com/rschmukler/component-stylus-plugin">rschmukler/component-stylus-plugin</a> — precompile stylus</li>
+<li><a href="https://github.com/segmentio/component-jade">segmentio/component-jade</a> — precompile jade templates</li>
+<li><a href="https://github.com/anthonyshort/component-coffee">anthonyshort/component-coffee</a> - require CoffeeScript files as scripts</li>
+<li><a href="https://github.com/anthonyshort/component-sass">anthonyshort/component-sass</a> - compile Sass files using node-sass</li>
+<li><a href="https://github.com/kewah/component-builder-handlebars">kewah/component-builder-handlebars</a> - precompile Handlebars templates</li>
+<li><a href="https://github.com/ericgj/component-hogan">ericgj/component-hogan</a> - Mustache transpiler for component (using Hogan)</li>
+<li><a href="https://github.com/segmentio/component-sass">segmentio/component-sass</a> — Sass transpiler for component</li>
+<li><a href="https://github.com/segmentio/component-json">segmentio/component-json</a> — Require JSON files as Javascript.</li>
+<li><a href="https://github.com/queckezz/component-roole">queckezz/component-roole</a> — Compile <a href="http://roole.org">Roole</a> files</li>
+<li><a href="https://github.com/Wizcorp/component-less">Wizcorp/component-less</a> - <a href="https://github.com/less/less.js">LESS</a> transpiler for component-builder</li>
+<li><a href="https://github.com/segmentio/component-markdown">segmentio/component-markdown</a> - Compile Markdown templates and make them available as Javascript strings.</li>
+</ul>
+<p>Given that you can use those to work with language/template you want.
+For example to use coffeescript you will need to install plugin in your root folder.</p>
+<figure class="highlight lang-sh"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="variable">$ </span>npm install component-coffee
+</pre></td></tr></table></figure>
+
+<p>Now after recompilation all your coffee files will be used as javascript. That also means you can use both js and coffee files in same repo.</p>
+<figure class="highlight lang-coffeescript"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="comment">#filename: add.coffee</span>
+module.<span class="function"><span class="title">exports</span></span> = (a, b) =&gt;
+  a + b
+</pre></td></tr></table></figure>
+
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="comment">//filename: appstart.js</span>
+<span class="keyword">var</span> add = require(<span class="string">'./add'</span>);
+add(<span class="number">2</span>,<span class="number">2</span>); <span class="comment">//4</span>
+</pre></td></tr></table></figure>
+
+<h3>And there is more</h3>
+<p><strong>Compy</strong> is built ontop of grunt. Basically it is just <a href="https://github.com/edjafarov/compy/blob/master/Gruntfile.js">grunt</a> setup. So no magic here. Though lots of stuff available:</p>
+<ul>
+<li>components support</li>
+<li>local <code>require</code></li>
+<li>supporting coffeescript, sass, jade and other <a href="#plugins">plugins</a></li>
+<li>static server + livereload</li>
+<li>karma runner</li>
+<li>grunt extendable</li>
+</ul>
+<p>May the <a href="https://github.com/edjafarov/compy/">force</a> be with you!</p>
+
+      
+    </div>
+    <footer>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  <section id="comment">
+            <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+</section>
+</div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 Eldar Djafarov
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
