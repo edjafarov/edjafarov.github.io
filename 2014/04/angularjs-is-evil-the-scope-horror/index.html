@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Angularjs is evil: the scope horror | @edjafarov</title>
+  <meta name="author" content="Eldar Djafarov">
+  
+  <meta name="description" content="edjafarov blog, javascript, nodejs, compy, component">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Angularjs is evil: the scope horror"/>
+  <meta property="og:site_name" content="@edjafarov"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="@edjafarov" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css?v=1" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-317979-12', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">@edjafarov</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+<div class="alignleft" style="margin-top: 15px">
+
+
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">Angularjs is evil: the scope horror</h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2014-04-21T16:04:27.000Z">Apr 21 2014</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>This is the second post about how angular makes my life painful.</p>
+<ul>
+<li><a href="/2014/02/angularjs-is-evil-dependency--injection/">Angularjs is evil: dependency injection</a></li>
+<li><a href="/2014/04/angularjs-is-evil-the-scope-horror/">Angularjs is evil: the scope horror</a></li>
+<li><a href="/2014/04/angular-is-evil-overengineering/">Angularjs is evil: overengineering hell</a></li>
+</ul>
+<p>The scope is most one of most complex concepts in Angular. You never know what scope are you in and what is available inside. Things may change if you add anguments somewhere at the top node.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'myApp'</span>, []);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">$scope</span>) </span>&#123;</span><br><span class="line">    $scope.value = <span class="string">"foo"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params">$scope</span>) </span>&#123;</span><br><span class="line">    $scope.value = <span class="string">"bar"</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"foo"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"bar"</span>&gt;</span></span><br><span class="line">    &#123;value&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>You can miss new <code>ng-controller</code> or someone could overwrite your context. It looks like ok, until you have really complex html.</p>
+<p>Things become more infernal when you try to create a directive. Directive may have or may not have the scope. Obviously you are passing the stuff to the scope through arguments of the newly created “element”. You can do it in three different ways with craziest API I ever seen - you got three magic symbols <code>&amp; = @</code> and they do different things with stuff you are throwing inside your arguments. I can only tell that it looks reasonable untill you find <a href="http://facebook.github.io/react/" target="_blank" rel="external">alternative</a> that do same thing and make sense in the same time.</p>
+<p>And then you try to do what every angular developer does at least once in his life. You take transclusion and try to put directive scope inside transcluded html. Which looks like a great idea at the beginning.</p>
+<p>The other thing that I hate about <code>$scope</code> is that I never know when the template will be rendered. It is quite painful to see the magic without knowing what’s happening. I know that I can learn it, my point though is that if I need to learn to embrace it is probably done in a wrong way.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      Latest:
+      <ul class="list-unstyled">
+      
+         <li>
+              <a href="/2015/06/PromisePipe-debugging/">PromisePipe: debugging</a>
+            </li>
+          
+         <li>
+              <a href="/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/">PromisePipe: cross process homogenous Promise chains</a>
+            </li>
+          
+         <li>
+              <a href="/2015/06/Responsibility-is-the-best-Motivation/">Responsibility is the best Motivation</a>
+            </li>
+          
+         <li>
+              <a href="/2015/01/the-holy-grail-promise-pipes/">The Holy Grail: promise pipes</a>
+            </li>
+          
+         <li>
+              <a href="/2014/09/proper-node-webkit-desktop-notifications/">proper node-webkit desktop notifications</a>
+            </li>
+          
+         <li>
+              <a href="/2014/07/semantic-styling/">semantic styling</a>
+            </li>
+          
+         <li>
+              <a href="/2014/06/node-webkit-autoupdate/">node-webkit autoupdate</a>
+            </li>
+          
+         <li>
+              <a href="/2014/05/framework-vs-microlib-architecture/">framework vs microlib architecture</a>
+            </li>
+          
+         <li>
+              <a href="/2014/04/angular-is-evil-overengineering/">Angularjs is evil: overengineering hell</a>
+            </li>
+          
+         <li>
+              <a href="/2014/04/managers-are-taking-your-projects-breath/">managers are taking your project&#39;s breath</a>
+            </li>
+          
+      </ul>
+      
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  <section id="comment">
+</section>
+</div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Eldar Djafarov
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<a href="http://stfalcon.github.io/euromaidan/" class="em-ribbon" style="position: absolute; left:0; top:0; width: 90px; height: 90px; background: url('http://stfalcon.github.io/euromaidan/img/em-ribbon.png'); z-index: 2013; border: 0;" title="Розмісти стрічку з символікою України і ЄС на своєму сайті!" target="_blank"></a>
+</body>
+</html>

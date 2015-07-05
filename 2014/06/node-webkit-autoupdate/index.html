@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>node-webkit autoupdate | @edjafarov</title>
+  <meta name="author" content="Eldar Djafarov">
+  
+  <meta name="description" content="edjafarov blog, javascript, nodejs, compy, component">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="node-webkit autoupdate"/>
+  <meta property="og:site_name" content="@edjafarov"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="@edjafarov" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css?v=1" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-317979-12', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">@edjafarov</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+<div class="alignleft" style="margin-top: 15px">
+
+
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">node-webkit autoupdate</h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2014-06-10T15:42:59.000Z">Jun 10 2014</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p><a href="https://github.com/rogerwang/node-webkit" target="_blank" rel="external">Node-webkit</a> allows you to build cross platform desktop application with <a href="https://nodejs.org" target="_blank" rel="external">node</a> and JavaScript. Though building desktop application unlike pure online webapp means you got no control over the code after the app was installed. Thus releases are painful and bugs after the code was released are frustrating.</p>
+<p>Right now desktop apps usually update themselves. <a href="https://github.com/rogerwang/node-webkit/issues/233" target="_blank" rel="external">Node-webkit do not have</a> this functionality out of the box. Which is reasonable because such functionality would hardly rely on specific implementation.</p>
+<p>So I created <a href="https://github.com/edjafarov/updater" target="_blank" rel="external">webkit-updater</a>. It relies on suggestion that your app will be packaged with <a href="https://www.npmjs.org/package/grunt-node-webkit-builder" target="_blank" rel="external">grunt-node-webkit-builder</a>, compressed with <a href="https://github.com/gruntjs/grunt-contrib-compress" target="_blank" rel="external">grunt-contrib-compress</a> and with windows package unzip.exe will be packaged. Basically the example of packaging app you can find <a href="https://github.com/edjafarov/updater/blob/master/gruntfile.js" target="_blank" rel="external">here</a>.</p>
+<p><a href="https://github.com/edjafarov/updater" target="_blank" rel="external">webkit-updater</a> is working/tested under <a href="http://screencast.com/t/OXyC5xoA" target="_blank" rel="external">mac</a>, <a href="http://screencast.com/t/MSTKqVS3" target="_blank" rel="external">win</a> and <a href="http://screencast.com/t/Je2ptbHhP" target="_blank" rel="external">linux</a>(32/64).</p>
+<h3 id="how_does_it_work">how does it work</h3><p>It gives you <a href="https://github.com/edjafarov/updater/blob/master/README.md#api" target="_blank" rel="external">api</a> to:</p>
+<ol>
+<li>Check the manifest for version.</li>
+<li>If the version is different from local one download new package to temp.</li>
+<li>Unpack the package to temp.</li>
+<li>Run new version from temp and exit the process.</li>
+<li>The new version from temp will copy itself to original folder.</li>
+<li>The new version will run itself from original folder and exit the process.</li>
+</ol>
+<p>you should build this logic by yourself though. As a reference you can use <a href="https://github.com/edjafarov/updater/blob/master/app/index.html" target="_blank" rel="external">example</a>.</p>
+<h3 id="what_are_the_plans">what are the plans</h3><p>There should be bugs, probably. Need to stabilize it and test it extensively in real world app.</p>
+<p>It would also be great to have different rates of updates:</p>
+<ul>
+<li>update assets only without page reload (<em>.</em>.x)</li>
+<li>update assets with page reload (<em>.x.</em>)</li>
+<li>update assets and node-webkit engine - full cycle (x.<em>.</em>)</li>
+</ul>
+<p>There is a <a href="https://github.com/rogerwang/node-webkit/wiki/The-solution-of-lacking-libudev.so.0" target="_blank" rel="external">bug</a> for newer versions of linux. Updater should resolve things like that. Also there should be some preInstall and postInstall scripts handling.</p>
+<p>You are welcome to <a href="https://github.com/edjafarov/updater" target="_blank" rel="external">use and commit</a>.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      Latest:
+      <ul class="list-unstyled">
+      
+         <li>
+              <a href="/2015/06/PromisePipe-debugging/">PromisePipe: debugging</a>
+            </li>
+          
+         <li>
+              <a href="/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/">PromisePipe: cross process homogenous Promise chains</a>
+            </li>
+          
+         <li>
+              <a href="/2015/06/Responsibility-is-the-best-Motivation/">Responsibility is the best Motivation</a>
+            </li>
+          
+         <li>
+              <a href="/2015/01/the-holy-grail-promise-pipes/">The Holy Grail: promise pipes</a>
+            </li>
+          
+         <li>
+              <a href="/2014/09/proper-node-webkit-desktop-notifications/">proper node-webkit desktop notifications</a>
+            </li>
+          
+         <li>
+              <a href="/2014/07/semantic-styling/">semantic styling</a>
+            </li>
+          
+         <li>
+              <a href="/2014/06/node-webkit-autoupdate/">node-webkit autoupdate</a>
+            </li>
+          
+         <li>
+              <a href="/2014/05/framework-vs-microlib-architecture/">framework vs microlib architecture</a>
+            </li>
+          
+         <li>
+              <a href="/2014/04/angular-is-evil-overengineering/">Angularjs is evil: overengineering hell</a>
+            </li>
+          
+         <li>
+              <a href="/2014/04/managers-are-taking-your-projects-breath/">managers are taking your project&#39;s breath</a>
+            </li>
+          
+      </ul>
+      
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  <section id="comment">
+</section>
+</div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Eldar Djafarov
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<a href="http://stfalcon.github.io/euromaidan/" class="em-ribbon" style="position: absolute; left:0; top:0; width: 90px; height: 90px; background: url('http://stfalcon.github.io/euromaidan/img/em-ribbon.png'); z-index: 2013; border: 0;" title="Розмісти стрічку з символікою України і ЄС на своєму сайті!" target="_blank"></a>
+</body>
+</html>

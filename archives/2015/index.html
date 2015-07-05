@@ -1,0 +1,421 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives: 2015 | @edjafarov</title>
+  <meta name="author" content="Eldar Djafarov">
+  
+  <meta name="description" content="edjafarov blog, javascript, nodejs, compy, component">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="@edjafarov"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="@edjafarov" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css?v=1" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-317979-12', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">@edjafarov</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+<div class="alignleft" style="margin-top: 15px">
+
+
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="wrapper">
+<h2 class="archive-title">2015</h2>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2015/06/PromisePipe-debugging/">PromisePipe: debugging</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2015-06-30T17:04:14.000Z">Jun 30 2015</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>While Promises look nice there is one thing I always hated about them. They are awful for debugging and they fail silently if you have a typo in your code. You need to catch the error otherwise you will never know what happened. So in PromisePipes I decided to fix that.</p>
+<p>So PromisePipe in debug mode shows unhandled exceptions in console:<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Failed inside test</span><br><span class="line"><span class="string">ReferenceError:</span> ff is not defined</span><br><span class="line">Object.test@<span class="regexp">/Users/</span>edjafarov<span class="regexp">/work/</span>PromisePipe<span class="regexp">/tests/</span>PromisePipe.error.spec.<span class="string">js:</span><span class="number">28</span>:<span class="number">16</span></span><br><span class="line">newArgFunc@<span class="regexp">/Users/</span>edjafarov<span class="regexp">/work/</span>PromisePipe<span class="regexp">/src/</span>PromisePipe.<span class="string">js:</span><span class="number">534</span>:<span class="number">26</span></span><br><span class="line">&#123;anonymous&#125;() ($)$$internal$$tryCatch@<span class="regexp">/Users/</span>edjafarov<span class="regexp">/work/</span>PromisePipe<span class="regexp">/node_modules/</span>es6-promise<span class="regexp">/dist/</span>es6-promise.<span class="string">js:</span><span class="number">304</span>:<span class="number">16</span></span><br><span class="line">&#123;anonymous&#125;() ($)$$internal$$invokeCallback@<span class="regexp">/Users/</span>edjafarov<span class="regexp">/work/</span>PromisePipe<span class="regexp">/node_modules/</span>es6-promise<span class="regexp">/dist/</span>es6-promise.<span class="string">js:</span><span class="number">316</span>:<span class="number">17</span></span><br><span class="line">&#123;anonymous&#125;()@<span class="regexp">/Users/</span>edjafarov<span class="regexp">/work/</span>PromisePipe<span class="regexp">/node_modules/</span>es6-promise<span class="regexp">/dist/</span>es6-promise.<span class="string">js:</span><span class="number">874</span>:<span class="number">13</span></span><br><span class="line">&#123;anonymous&#125;() ($)$asap$$flush@<span class="regexp">/Users/</span>edjafarov<span class="regexp">/work/</span>PromisePipe<span class="regexp">/node_modules/</span>es6-promise<span class="regexp">/dist/</span>es6-promise.<span class="string">js:</span><span class="number">111</span>:<span class="number">9</span></span><br><span class="line">process._tickCallback<span class="annotation">@node</span>.<span class="string">js:</span><span class="number">442</span>:<span class="number">13</span></span><br></pre></td></tr></table></figure></p>
+<p>It notifies you that things go wrong though it is not that useful for real life debugging.</p>
+<p>What is really helping is that PromisePipe wraps each chain function into the wrapper that is recording data/context values that chain is called with. You can track how the data is transformed by each chain. And it works out of the box. Just setup debug mode for PromisePipe like this:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PromisePipe.setMode(<span class="string">"DEBUG"</span>)</span><br></pre></td></tr></table></figure>
+<p>In chrome it looks like this:</p>
+<h2 id="Whats_next">Whats next</h2><ul>
+<li><p>We have the decomposition of all calls of the PromisePipe and transformations during the execution. That allows us to record the log of what happened while reproducing the bug by QA and replay the log later by Developer.</p>
+</li>
+<li><p>As well we can record session to use it for autogeneration of integration tests.</p>
+</li>
+<li><p>And we can watch a performance of each chain individually.</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/">PromisePipe: cross process homogenous Promise chains</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2015-06-17T11:42:39.000Z">Jun 17 2015</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>I used to be a backend developer and even earlier I was a frontend developer. I guess I was good backend dev for my frontend colleagues at that time. Since I was thinking about API’s as a consumer of that API.</p>
+<p>I wasn’t ever that lucky as a frontend dev. Building API is hard. It usually takes a lot of time and wtf’s to get same vision on how communication with the server should work.  We start with REST API, then everyone has its own vision on what is REST. Each modification of API is a pain and it always take a lot of time and talks to make a change.</p>
+<p>Today as frontend developer I usually describe resource calls with Promises. I use promises because I find their chaining API really nice to describe the potentially asynchronous business logic.</p>
+<p>It might be that any business logic could be represented as a chain of data transformations. Even saving of data in DB is a transformation of data into item ID.</p>
+<p>Lets check following code for a simple frontend business logic built with Promises:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve(item)</span><br><span class="line">  .then(validateItem)</span><br><span class="line">  .then(postItem)</span><br><span class="line">  .then(addItem)</span><br><span class="line">  .catch(handleError)</span><br></pre></td></tr></table></figure>
+<p><code>postItem</code> here will return a Promise that will be resolved when the server replies.</p>
+<p>On server side, we would probably have some express route:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/api/items'</span>,</span><br><span class="line">  validateItemMiddleware,</span><br><span class="line">  saveItemInDBMiddleware,</span><br><span class="line">  returnItemMiddleware)</span><br></pre></td></tr></table></figure>
+<p>If Promises would appear earlier, I think nodejs <a href="http://expressjs.com/" target="_blank" rel="external">express</a> would use them instead of middlewares.<br>Built with Promise chains the server will probably look something like:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/api/items'</span>)</span><br><span class="line">  .then(validateItem)</span><br><span class="line">  .then(saveItemInDB)</span><br><span class="line">  .then(returnItem)</span><br></pre></td></tr></table></figure>
+<p>Since any Promise could be constructed out of composition of Promises lets imagine for a second that we do not have a frontend and backend - our code will look like:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> postItem = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(data)</span><br><span class="line">    .then(validateItem)</span><br><span class="line">    .then(saveItemInDB)</span><br><span class="line">    .then(returnItem)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve(item)</span><br><span class="line">  .then(validateItem)</span><br><span class="line">  .then(postItem)</span><br><span class="line">  .then(addItem)</span><br><span class="line">  .catch(handleError)</span><br></pre></td></tr></table></figure>
+<p>Obviously in that case we would need no API at all and we won’t waste time deciding how to name the Url and what method to use right?</p>
+<p>And we can go even deeper:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve(item)</span><br><span class="line">  .then(validateItem)</span><br><span class="line">  .then(validateItemServer)</span><br><span class="line">  .then(saveItemInDB)</span><br><span class="line">  .then(addItem)</span><br><span class="line">  .catch(handleError)</span><br></pre></td></tr></table></figure>
+<p>Of cause, you can’t do it with plain promises - but with <a href="https://github.com/edjafarov/PromisePipe" target="_blank" rel="external">PromisePipe</a> you can.</p>
+<p>PromisePipe is a builder for reusable promise chains.<br>It has more control over the execution of chains and can control how to execute each of them.</p>
+<p>PromisePipe is a singleton. You build chains of business logic and run the code both on server and client. Chains marked to be executed on the server will be executed on the server only and chains marked to be executed in the client will be executed in the client. You need to implement methods in PromisePipe to pass messages from the client to the server. And it is up to you what transport to use.</p>
+<p><img src="/images/PromisePipe.png" alt="PromisePipe"></p>
+<p>So you need to write some boilerplate code that would pass messages around between server and client to try it (<a href="https://github.com/edjafarov/PromisePipe/tree/master/example/simple" target="_blank" rel="external">simple example</a>). So far I wrote examples with <a href="http://socket.io/" target="_blank" rel="external">socket.io</a> as a transport but there is no problem to use plain HTTP request or any protocol that can pass messages around.</p>
+<p><img src="/images/Ck1tyZ5qA8.gif" alt="simple example"></p>
+<p>With PromisePipe our code example would look like:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> doOnServer = PromisePipe.in(<span class="string">'server'</span>)</span><br><span class="line"><span class="keyword">var</span> addItemAction = PromisePipe()</span><br><span class="line">  .then(validateItem)</span><br><span class="line">  .then(doOnServer(validateItemServer))</span><br><span class="line">  .then(doOnServer(saveItemInDB))</span><br><span class="line">  .then(addItem)</span><br><span class="line">  .catch(handleError);</span><br><span class="line">addItemAction(item) <span class="comment">// will pass complete chain</span></span><br></pre></td></tr></table></figure>
+<p>When execution comes to <code>validateItemServer</code> chain PromisePipe is passing execution to server with execution message and proceeds there. <code>validateItemServer</code> and <code>saveItemInDB</code> are executing on the server side and the message passed back to a client to proceed execution starting with <code>addItem</code>.</p>
+<p>PromisePipe allows to extend API with custom methods and you can build expressive DSL that will describe business logic:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> doOnServer = PromisePipe.in(<span class="string">'server'</span>)</span><br><span class="line"><span class="keyword">var</span> addItemAction = PromisePipe()</span><br><span class="line">  .validate(<span class="string">'item'</span>)</span><br><span class="line">  .validateServer(<span class="string">'item'</span>)</span><br><span class="line">  .db.save.Item()</span><br><span class="line">  .then(addItem)</span><br><span class="line">  .catch(handleError);</span><br><span class="line">addItemAction(item) <span class="comment">// will pass complete chain</span></span><br></pre></td></tr></table></figure>
+<p>For example, here is a <a href="https://github.com/edjafarov/mongo-pipe-api" target="_blank" rel="external">mongodb API</a> for PromisePipe. And here is an example of <a href="https://github.com/edjafarov/PromisePipe/tree/master/example/mongotodo" target="_blank" rel="external">todo-app</a>(<a href="bit.ly/promisepipe-todo">live</a>) which uses this “mongo-pipe-api”. <code>validateServer</code> and “mongo-pipe-api” should be marked as serverside methods. So, they would be executed on the server only.</p>
+<p>PromisePipe allows to build business logic out of simple transformation chains which can run in different processes while the logic itself still simple and homogenous.</p>
+<p>With PromisePipes you get:</p>
+<ul>
+<li><p><strong>simplicity</strong></p>
+<p>  Build up your logic in a functional manner with simple transformations. Forget about the process to process communication and save time for building business logic.</p>
+</li>
+<li><p><strong>testability</strong></p>
+<p>  Each chain can be tested independently. It is also easy to assemble pieces of logic together and test parts in isolation.</p>
+</li>
+<li><p><strong>isomorphism</strong></p>
+<p>  PromisePipe was created to work in a cross process environment. You will get isomorphic business logic out of the box if you build chains with isomorphism in mind. So if you do not use any env specific API’s in your logic you can run pipe in a single process or expect the chain to work in multiple environments like browser and server.</p>
+</li>
+<li><p><strong>scalability</strong></p>
+<p>  Each chain could be running in a separate process without much effort. That doesn’t mean you have scalability out of the box. But you have a nice way to distribute your load over multiple processes.</p>
+</li>
+<li><p><strong>frontend guys can build complete business logic</strong></p>
+<p>  Chains are easy to compose together. The main idea behind is to allow frontend guys to use simple building blocks to build backend functionality encapsulating complexity inside meaningful business logic chains.</p>
+</li>
+</ul>
+<p><img src="/images/homogenous-code.png" alt="homogenous code"></p>
+<p>I believe PromisePipe will help us to push microservice architectures forward. The homogenous business logic allows decoupling of logic from process to process communication. Which makes no difference between code that is running in monolith and miscroservice architecture.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2015/06/Responsibility-is-the-best-Motivation/">Responsibility is the best Motivation</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2015-06-08T08:11:06.000Z">Jun 8 2015</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>You probably also hate the M word. So let’s make it this way - we can’t motivate people to build our product, so let’s develop an attachment of those people to our product and they would take care of it as much as we are.</p>
+<p>We are spending one-third of our lives doing our jobs. It is natural to care about what you are doing. And it is really important to allow people to care about the whole product. People tend to take some area of ownership where they have best expertise and make it their baby. But doing that they stop caring about a whole product which eventually decreases the Motivation.</p>
+<p>I believe that proper distribution of responsibility is a key for a successful attachment of a person to a product. To make it happen:</p>
+<ul>
+<li><p><strong>responsibility should be shareable</strong></p>
+<p>  It is hard to believe but giving out responsibility is really hard. But if you want people to care you should trust them.</p>
+</li>
+<li><p><strong>taking responsibility should be safe</strong></p>
+<p>  One who is taking responsibility should be supported by all other team members. The person should feel that he won’t be blamed if he failed. That whole team will step up to help him fix any problems.</p>
+</li>
+<li><p><strong>taking responsibility should be broad</strong></p>
+<p>  Any member should be able to commit in any part of the business. Including the business part itself. And areas of responsibility should change over time. One should try many roles and take responsibility of multiple aspects of the project.</p>
+</li>
+<li><p><strong>risks should be minimized with routines and processes (one should feel that they work for him)</strong></p>
+<p>  Taking responsibility is also taking a risk and is really stressful. The process should work in the way to minimize risks and stresses over time. Those routines should be meaningful and simple enough to perform. Ideally over time many routines should be automatized.</p>
+</li>
+</ul>
+<p>And the most important thing - <strong>failures should be shared</strong>, passing through hard times is what makes a true attachment and reliance of a team members.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2015/01/the-holy-grail-promise-pipes/">The Holy Grail: promise pipes</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2015-01-27T17:19:35.000Z">Jan 27 2015</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>The Holy Grail series of posts is about React based framework (inspired by Flux architecture) for building isomorph applications. This framework is like a puzzle consists of multiple segments that should play well together. Though each segment can be used separately.</p>
+<p><a href="https://github.com/edjafarov/PromisePipe" target="_blank" rel="external">PromisePipes</a> are reusable and cutomisable promise chains. They allow to build own business logic promise based DSL like:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> doAction = PromisePipe().add(<span class="number">5</span>).multiply(<span class="number">2</span>).pow(<span class="number">10</span>).doSomeBusinessLogic(withArgs).save(<span class="string">'/api/result'</span>).emit(<span class="string">'result:saved'</span>);</span><br><span class="line"></span><br><span class="line">doAction(<span class="number">1</span>); <span class="comment">//((1+5)*2)^10 -&gt; POST /api/result -&gt; 'result:saved'</span></span><br><span class="line">doAction(<span class="number">2</span>); <span class="comment">//((2+5)*2)^10 -&gt; POST /api/result -&gt; 'result:saved'</span></span><br></pre></td></tr></table></figure>
+<h2 id="SPA_patterns">SPA patterns</h2><p>There are common patterns for frontend SPA patterns. Most of app work is to:</p>
+<ul>
+<li>get data from server.</li>
+<li>modify data.</li>
+<li>render data.</li>
+<li>save data to server.</li>
+</ul>
+<p>Usually when user surfs app pages in your SPA app does <code>GET -&gt; render</code> flow. With PromisePipe that would look like:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PromisePipe()</span><br><span class="line">.get(<span class="string">'/api/data'</span>)</span><br><span class="line">.render(<span class="string">'view_name'</span>)</span><br></pre></td></tr></table></figure>
+<p>Where the <code>.get()</code> is a promise that returns the body as a result to next promise in chain.</p>
+<p>When user submits form app does <code>(data) -&gt; Validation -&gt; SAVE -&gt; render</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PromisePipe()</span><br><span class="line">.validate(validationScheme) <span class="comment">//validate incoming data, reject if failed</span></span><br><span class="line">.save(<span class="string">'/api/data'</span>) <span class="comment">//save data if validation successfull</span></span><br><span class="line">.catch(handleErrors) <span class="comment">//catch and handle validation or save error</span></span><br><span class="line">.render(<span class="string">'view_name'</span>)</span><br></pre></td></tr></table></figure>
+<p>You can mix data from various sources with the PromisePipe:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> renderAuthorByBookId = PromisePipe()</span><br><span class="line">.get(<span class="string">'/api/books/:bookId'</span>, &#123;bookId:<span class="string">'id'</span>&#125;)</span><br><span class="line">.map(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> data.author;</span><br><span class="line">&#125;)</span><br><span class="line">.get(<span class="string">'/api/books/:authorId'</span>, &#123;authorId:<span class="string">'id'</span>&#125;)</span><br><span class="line">.render(<span class="string">'view_name'</span>)</span><br><span class="line"></span><br><span class="line">renderAuthorByBookId(&#123;id: <span class="number">10</span>&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>You can play around with PromisePipe in this <a href="http://jsfiddle.net/djkojb/dLehre33/" target="_blank" rel="external">fiddle</a>.</p>
+<h3 id="Form_validation">Form validation</h3><p>PromisePipe was built to work in single direction dataflow architecture inspired by Flux. The PromisePipe role is to prepare (fetch/save) and manipulate data. These pipes are containers of pure business logic and stores/models are listening for events emitted in the pipes context and fill themselves with the data.</p>
+<p>The validation of forms pattern is pretty neat. One of solutions for validation is mixing validation result with the data itself. I feel like this is wrong making the data dirty and flow ambigous. With PromisePipe I am separating the data of error object.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> context = <span class="keyword">new</span> Emitter();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> saveEventItem = PromisePipe()</span><br><span class="line">.validate(validationScheme)</span><br><span class="line">.post(<span class="string">'/api/events'</span>)</span><br><span class="line">.emit(<span class="string">'events:add'</span>);</span><br><span class="line">.catchAndEmit(<span class="string">'events:add:reject'</span>)</span><br><span class="line"></span><br><span class="line">saveEventItem(formData, context);</span><br></pre></td></tr></table></figure>
+<p>On submit the app will call the function passing the form data as a first argument and apps context as second.</p>
+<p>The store can hook up the context events and look like:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">eventsStore</span>(<span class="params">context</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> form = &#123;</span><br><span class="line">    	data: [],</span><br><span class="line">        errors: &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Emitter(&#123;</span><br><span class="line">    	init: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      		context.on(<span class="string">'events:add'</span>, addEvent.bind(<span class="keyword">this</span>));</span><br><span class="line">			context.on(<span class="string">'events:add:reject'</span>, updateErrors.bind(<span class="keyword">this</span>));</span><br><span class="line">        &#125;,</span><br><span class="line">        get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        	<span class="keyword">return</span> form;</span><br><span class="line">        &#125;,</span><br><span class="line">        updateErrors: <span class="function"><span class="keyword">function</span>(<span class="params">errors</span>)</span>&#123;</span><br><span class="line">        	form.errors = errors;</span><br><span class="line">            <span class="keyword">this</span>.emit(<span class="string">'change'</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        addEvent: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">        	form.data.push(data);</span><br><span class="line">            <span class="keyword">this</span>.emit(<span class="string">'change'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> eventsForm = eventsStore(context);</span><br><span class="line"></span><br><span class="line">saveEventItem(formData, context);</span><br><span class="line"><span class="comment">// validate -&gt; post -&gt; emit(events:add) -&gt; eventsForm.addEvent -&gt; eventsForm.emit('change')</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="isomporph_resources">isomporph resources</h3><p>The <code>.get</code>, <code>.post()</code>, <code>emit</code>, etc methods are not a part of PromisePipe API. But you can extend PromisePipe API. That opens you a possibility to build DSL with <a href="https://github.com/visionmedia/superagent" target="_blank" rel="external">superagent</a> thus making it isomorph.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> resource = <span class="built_in">require</span>(<span class="string">'superagent'</span>);</span><br><span class="line"></span><br><span class="line">PromisePipe.use(<span class="string">'get'</span>, <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">data, context, url, query</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">var</span> req = resource.get(prepreUrl.call(context, url));</span><br><span class="line">		<span class="keyword">if</span>(context.request &amp;&amp; context.request.headers)&#123;</span><br><span class="line">			req.set(context.request.headers);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">typeof</span>(query) == <span class="string">'function'</span>) &#123;</span><br><span class="line">			req.query(query.call(context, data));</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">typeof</span>(query) == <span class="string">'object'</span>)&#123;</span><br><span class="line">			req.query(query);</span><br><span class="line">		&#125;</span><br><span class="line">		req.on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">			reject(err);</span><br><span class="line">		&#125;)</span><br><span class="line">		req.end(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(res.error) <span class="keyword">return</span> reject(res.error);</span><br><span class="line">			resolve(res.body);</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="PromisePipe">PromisePipe</h3><h3 id="install">install</h3><p>npm install promise-stream</p>
+<h3 id="extend">extend</h3><p>You can extend <code>PromisePipe</code> API with additional methods. Thus you are able to build your own customized DSL.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> PromisePipe = <span class="built_in">require</span>(<span class="string">'promise-pipe'</span>);</span><br><span class="line"></span><br><span class="line">PromisePipe.use(<span class="string">'log'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data, context, name</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(name) &#123;</span><br><span class="line">    	<span class="built_in">console</span>.log(data[name]);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    	<span class="built_in">console</span>.log(data)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> action = PromisePipe().log().log(<span class="string">'foo'</span>);</span><br><span class="line"></span><br><span class="line">action(&#123;foo:<span class="string">"baz"</span>, bar:<span class="string">"xyz"</span>&#125;)</span><br><span class="line"><span class="comment">// &#123;foo:"baz", bar:"xyz"&#125; &lt;- log()</span></span><br><span class="line"><span class="comment">// baz &lt;- log('foo')</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="API">API</h3><h3 id="PromisePipe-1">PromisePipe</h3><h3 id="PromisePipe-use(name,_handler)">PromisePipe.use(name, handler)</h3><p>Allows to build your own customized DSL. <code>handler</code> is a function with arguments</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handler</span>(<span class="params">data, context, arg1, ..., argN</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//you can return Promise</span></span><br><span class="line">	<span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br><span class="line">PromisePipe.use(<span class="string">'custom'</span>, handler);</span><br><span class="line"></span><br><span class="line">PromisePipe().custom(arg1, ..., argN)</span><br></pre></td></tr></table></figure>
+<h3 id="Stream">Stream</h3><p>Is a function that returns a promise. First argument is a data, second is a context. While <code>data</code> behaves the same way as in Promises <code>context</code> is passing thorough whole chain of promises.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stream = PromisePipe()</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span>(<span class="params">data, context</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(data, context);</span><br><span class="line">    context.foo = <span class="string">"bar"</span>;</span><br><span class="line">	<span class="keyword">return</span> data + <span class="number">1</span>;</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">data, context</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(data, context);</span><br><span class="line">    context.xyz = <span class="string">"baz"</span>;</span><br><span class="line">	<span class="keyword">return</span> data + <span class="number">1</span>;</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">data, context</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(data, context);</span><br><span class="line">&#125;)</span><br><span class="line">stream(<span class="number">2</span>, &#123;&#125;);</span><br><span class="line"><span class="comment">//2 &#123;&#125;</span></span><br><span class="line"><span class="comment">//3 &#123;foo:"bar"&#125;</span></span><br><span class="line"><span class="comment">//4 &#123;foo:"bar", xyz:"baz"&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="stream:then">stream:then</h3><p>As in Promises you can pass two functions inside for success and fail.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stream = PromisePipe()</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span>(<span class="params">data, context</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="comment">//Promise.resolve/reject</span></span><br><span class="line">&#125;).then(success, fail)</span><br></pre></td></tr></table></figure>
+<h3 id="stream:catch">stream:catch</h3><p>The catch is taking single argument and bahaves same as Promise catch.</p>
+<h3 id="stream:join">stream:join</h3><p>You can join PromisePipes if you like.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stream = PromisePipe()</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span>(<span class="params">data, context</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> data + <span class="number">1</span>;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> stream2 = PromisePipe()</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span>(<span class="params">data, context</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> data + <span class="number">2</span>;</span><br><span class="line">&#125;)</span><br><span class="line">.join(stream)</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">stream2(<span class="number">1</span>) <span class="comment">//4</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+
+</div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Eldar Djafarov
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<a href="http://stfalcon.github.io/euromaidan/" class="em-ribbon" style="position: absolute; left:0; top:0; width: 90px; height: 90px; background: url('http://stfalcon.github.io/euromaidan/img/em-ribbon.png'); z-index: 2013; border: 0;" title="Розмісти стрічку з символікою України і ЄС на своєму сайті!" target="_blank"></a>
+</body>
+</html>

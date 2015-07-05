@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives: 2013/11 | @edjafarov</title>
+  <meta name="author" content="Eldar Djafarov">
+  
+  <meta name="description" content="edjafarov blog, javascript, nodejs, compy, component">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="@edjafarov"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="@edjafarov" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css?v=1" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-317979-12', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">@edjafarov</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+<div class="alignleft" style="margin-top: 15px">
+
+
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="wrapper">
+<h2 class="archive-title">2013/11</h2>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2013/11/reactjs-mixing-with-backbone/">Reactjs mixing with Backbone</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2013-11-24T05:06:04.000Z">Nov 24 2013</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>Reactjs is a javascript librarby for building user interfaces opensourced by facebook just recently.</p>
+<p>Not long ago I felt that as a developer I have more or less two best options to build an app. Whether do it in #angular or #backbone. Now I feel that #react is taking best of angular, do it better and allows to use best parts of backbone.</p>
+<p>I hate Backbone Views and I hate $scope of angular, especially when it comes to directive scope and all &amp;-@-= stuff. Transclusion and scope is a double hell and I am not talking about digesting and performance yet.</p>
+<p>React has really small API and it does one thing, but does it really well. It abstracts DOM for you and optimizes the rendering part. So each time you need react to reflect state changes in the DOM it renders lightweight DOM in javascript and applies only diff to the real DOM. In that way rendering becomes really cheap unlike in angular. And that allows us to build apps with diffenrent patterns in mind.</p>
+<p>And here are some tips I got from several weeks of playing around #Reactjs</p>
+<h3 id="React_is_just_V">React is just V</h3><p>React needs other stuff like routes and models. I am taking them from Backbone.</p>
+<h3 id="Models_are_state">Models are state</h3><p>By default React have single state <code>this.state</code>. Which is not usually best solution. It appears that cleaner way is to have multiple states. Where <code>this.state</code> is not persisting state and backbone models are.</p>
+<p>In the React’s example you can find <a href="https://github.com/facebook/react/blob/master/examples/todomvc-backbone/js/app.js#L148" target="_blank" rel="external">BackboneMixin</a> but it has some flaws. Following one is better since it does proper cleanup.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span>  ModelMixin = &#123;</span><br><span class="line">  componentDidMount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Whenever there may be a change in the Backbone data, trigger a reconcile.</span></span><br><span class="line">    <span class="keyword">this</span>.getBackboneModels().forEach(<span class="keyword">this</span>.injectModel, <span class="keyword">this</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  componentWillUnmount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Ensure that we clean up any dangling references when the component is</span></span><br><span class="line">    <span class="comment">// destroyed.</span></span><br><span class="line">    <span class="keyword">this</span>.__syncedModels.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">model</span>) </span>&#123;</span><br><span class="line">      model.off(<span class="literal">null</span>, model.__updater, <span class="keyword">this</span>);</span><br><span class="line">    &#125;, <span class="keyword">this</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  injectModel: <span class="function"><span class="keyword">function</span>(<span class="params">model</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">this</span>.__syncedModels) <span class="keyword">this</span>.__syncedModels = [];</span><br><span class="line">    <span class="keyword">if</span>(!~<span class="keyword">this</span>.__syncedModels.indexOf(model))&#123;</span><br><span class="line">      <span class="keyword">var</span> updater = <span class="keyword">this</span>.forceUpdate.bind(<span class="keyword">this</span>, <span class="literal">null</span>);</span><br><span class="line">      model.__updater = updater;</span><br><span class="line">      model.on(<span class="string">'add change remove'</span>, updater, <span class="keyword">this</span>);</span><br><span class="line">      <span class="keyword">this</span>.__syncedModels.push(model);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In that way you can use same models in several nested components.</p>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;rootComponent <span class="literal">user</span>=<span class="string">"new UserModel(&#123;id: id&#125;)"</span>&gt;</span><br><span class="line">  &lt;contactComponent <span class="literal">user</span> = &#123;this.props.<span class="literal">user</span>&#125;/&gt;</span><br><span class="line">  &lt;userpicComponent <span class="literal">user</span> = &#123;this.props.<span class="literal">user</span>&#125;/&gt;</span><br><span class="line">&lt;/rootComponent&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2_way_binding">2 way binding</h3><p>It’s kinda logical to have 2 way binding with those Backbone models. <a href="https://github.com/facebook/react/tree/master/src/addons/link" target="_blank" rel="external">LinkedState</a> plugin is working only for state thus here is BindMixin wich does basically the same as LinkedState but for Backbone models.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span>  BindMixin = &#123;</span><br><span class="line">  bindTo: <span class="function"><span class="keyword">function</span>(<span class="params">model, key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      value: model.get(key),</span><br><span class="line">      requestChange: <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">          model.set(key, value);</span><br><span class="line">      &#125;.bind(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This mixin adds bindTo method that binds control with model property as simple as <code>this.bindTo(user, &#39;name&#39;)</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Hello = React.createClass(&#123;</span><br><span class="line">  mixins:[ModelMixin, BindMixin],</span><br><span class="line">  getBackboneModels: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">this</span>.props.instance]</span><br><span class="line">  &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> model = <span class="keyword">this</span>.props.instance;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span>&gt;</span>Hello &#123;model.get('initial')&#125;<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">valueLink</span>=<span class="value">&#123;this.bindTo(model,</span> '<span class="attribute">initial</span>')&#125;/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span></span><br></pre></td></tr></table></figure>
+<p>Here is working example: <a href="http://jsfiddle.net/djkojb/qZf48/24/" target="_blank" rel="external">http://jsfiddle.net/djkojb/qZf48/24/</a></p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+
+</div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Eldar Djafarov
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<a href="http://stfalcon.github.io/euromaidan/" class="em-ribbon" style="position: absolute; left:0; top:0; width: 90px; height: 90px; background: url('http://stfalcon.github.io/euromaidan/img/em-ribbon.png'); z-index: 2013; border: 0;" title="Розмісти стрічку з символікою України і ЄС на своєму сайті!" target="_blank"></a>
+</body>
+</html>

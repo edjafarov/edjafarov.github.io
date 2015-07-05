@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives: 2013/9 | @edjafarov</title>
+  <meta name="author" content="Eldar Djafarov">
+  
+  <meta name="description" content="edjafarov blog, javascript, nodejs, compy, component">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="@edjafarov"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="@edjafarov" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css?v=1" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-317979-12', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">@edjafarov</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+<div class="alignleft" style="margin-top: 15px">
+
+
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="wrapper">
+<h2 class="archive-title">2013/9</h2>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2013/09/why-building-another-app-compiller/">why building another app compiler?</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2013-09-28T12:10:19.000Z">Sep 28 2013</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>When you are frontend developer and start doing node npm completely spoils you. Because unlike we used to it provides single and predictable way of adding/using 3rd party libs and snippets to your code.</p>
+<p>Frontend is more complex in many ways. It is more fragmented since there are html and css additionally to javascript and our code is running in different combinations of vm’s and platforms.</p>
+<p>Commonly used way of adding 3rd libs is a <code>/vendor</code> folder that holds bunch of unminified (if you’re lucky enough) files that were downloaded by someone ages ago. Maybe you will find comments inside that will give you an idea of what version of library is used, maybe not. Also what-load-first dependency management is completely your pain. You might have a master file with all the scripts loaded in ‘right’ order <img width="15" height="15" src="http://skypeblogs.files.wordpress.com/2011/07/0186-facepalm-30px.png?w=30&h=30">.</p>
+<p><a href="https://github.com/bower/bower" target="_blank" rel="external"><strong>Bower</strong></a> is doing great job adding more metadata to packages fixing some problemts. But <em>Bower is just a package manager (c)</em> and it doesnt load scripts. So again, you need to do additional job defining what-load-when relations.</p>
+<p>Even if you will use <a href="https://github.com/jrburke/requirejs" target="_blank" rel="external"><strong>require.js</strong></a> you need to configure 3rd libraries. Besides <strong>requirejs</strong> adds it’s own complexities into code. For example: do you know the difference between <code>require</code> and <code>define</code> functions? And frankly why do you need to know difference! You need something that just works.</p>
+<p>So at the end of a day we need package manager that will deliver libs into our app, require functionality that will handle script dependencies and builder that will wire all the thing together and give back 3 files: index.html, app.js and app.css</p>
+<h3 id="and_compy_can_do_it">and <a href="https://github.com/edjafarov/compy" target="_blank" rel="external">compy</a> can do it</h3><p><a href="https://github.com/component/component" target="_blank" rel="external"><strong>Componentjs</strong></a> does most of work already. <strong>Compy</strong> just wraps the concept in one solid solution.</p>
+<h4 id="component_package_manager"><strong>component package manager</strong></h4><p><strong>Componentjs</strong> was obvious choice. Unlike <strong>npm</strong> or <strong>bower</strong> component is really strict on what files considered a source. Which is not that important for server but really important for frontend.</p>
+<h4 id="local_require"><strong>local require</strong></h4><p><strong>Componentjs</strong> gives local require out of the box. Component’s require is synchronous. Your files are wrapped in scope and concatenated in one file. Your dependencies are already loaded then you require them. Thus you don’t break javascript and require becomes plain simple and clear.</p>
+<h4 id="builder"><strong>builder</strong></h4><p>Builder takes responsibility to compile out three files: app.js, app.css and index.html. app.js is built of js dependencies (components), precompiled templates and js source files. app.css is just concatenated css files and index.html generated automatically to eat js/css and run “main” file. Builder have bunch of plugins that allow to precompile sources. So you can use coffeescript, scss, jade, whatever. And just technically because we avoid on read/write cycle comparing to plain grunt it’s faster than grunt. And you can use mix of technologies require coffeescript from js and vice versa.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+
+</div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Eldar Djafarov
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<a href="http://stfalcon.github.io/euromaidan/" class="em-ribbon" style="position: absolute; left:0; top:0; width: 90px; height: 90px; background: url('http://stfalcon.github.io/euromaidan/img/em-ribbon.png'); z-index: 2013; border: 0;" title="Розмісти стрічку з символікою України і ЄС на своєму сайті!" target="_blank"></a>
+</body>
+</html>

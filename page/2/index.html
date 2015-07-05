@@ -1,0 +1,567 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Page 2 | @edjafarov</title>
+  <meta name="author" content="Eldar Djafarov">
+  
+  <meta name="description" content="edjafarov blog, javascript, nodejs, compy, component">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="@edjafarov"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="@edjafarov" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css?v=1" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-317979-12', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">@edjafarov</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+<div class="alignleft" style="margin-top: 15px">
+
+
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="wrapper">
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2014/04/angularjs-is-evil-the-scope-horror/">Angularjs is evil: the scope horror</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2014-04-21T16:04:27.000Z">Apr 21 2014</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>This is the second post about how angular makes my life painful.</p>
+<ul>
+<li><a href="/2014/02/angularjs-is-evil-dependency--injection/">Angularjs is evil: dependency injection</a></li>
+<li><a href="/2014/04/angularjs-is-evil-the-scope-horror/">Angularjs is evil: the scope horror</a></li>
+<li><a href="/2014/04/angular-is-evil-overengineering/">Angularjs is evil: overengineering hell</a></li>
+</ul>
+<p>The scope is most one of most complex concepts in Angular. You never know what scope are you in and what is available inside. Things may change if you add anguments somewhere at the top node.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'myApp'</span>, []);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">$scope</span>) </span>&#123;</span><br><span class="line">    $scope.value = <span class="string">"foo"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params">$scope</span>) </span>&#123;</span><br><span class="line">    $scope.value = <span class="string">"bar"</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"foo"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"bar"</span>&gt;</span></span><br><span class="line">    &#123;value&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>You can miss new <code>ng-controller</code> or someone could overwrite your context. It looks like ok, until you have really complex html.</p>
+<p>Things become more infernal when you try to create a directive. Directive may have or may not have the scope. Obviously you are passing the stuff to the scope through arguments of the newly created “element”. You can do it in three different ways with craziest API I ever seen - you got three magic symbols <code>&amp; = @</code> and they do different things with stuff you are throwing inside your arguments. I can only tell that it looks reasonable untill you find <a href="http://facebook.github.io/react/" target="_blank" rel="external">alternative</a> that do same thing and make sense in the same time.</p>
+<p>And then you try to do what every angular developer does at least once in his life. You take transclusion and try to put directive scope inside transcluded html. Which looks like a great idea at the beginning.</p>
+<p>The other thing that I hate about <code>$scope</code> is that I never know when the template will be rendered. It is quite painful to see the magic without knowing what’s happening. I know that I can learn it, my point though is that if I need to learn to embrace it is probably done in a wrong way.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2014/02/angularjs-is-evil-dependency-injection/">Angularjs is evil: dependency injection</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2014-02-17T18:11:02.000Z">Feb 17 2014</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>A year ago I was excited of angular and I still think angular is a game changer. I see how community charmed with angular and how easy to start building webapps apps with it. However after a year of using angular I must say that I am not recommending investing time into this framework. I will write several posts about why.</p>
+<ul>
+<li><a href="/2014/02/angularjs-is-evil-dependency--injection/">Angularjs is evil: dependency injection</a></li>
+<li><a href="/2014/04/angularjs-is-evil-the-scope-horror/">Angularjs is evil: the scope horror</a></li>
+<li><a href="/2014/04/angular-is-evil-overengineering/">Angularjs is evil: overengineering hell</a></li>
+</ul>
+<p>One of things I hate most about angular is its module system. Sadly it is deeply injected in its DNA. Someone decided that DI in JavaScript should look like this:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">someFactory</span>(<span class="params">stuff</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//use stuff</span></span><br><span class="line">&#125;</span><br><span class="line">someFactory.$inject = [<span class="string">'stuff'</span>];</span><br><span class="line"></span><br><span class="line">app.factory([<span class="string">'stuff'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">stuff</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//use stuff</span></span><br><span class="line">&#125;])</span><br></pre></td></tr></table></figure>
+<p>It looks cool. But for me as a JS developer it’s too messy and complex (someFactory-&gt;someFactoryProvider o_O WTF?!) Here is a dependency injection in pure JS:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">someFactory</span>(<span class="params">stuff</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="comment">//we're using closure for DI here</span></span><br><span class="line">    	<span class="comment">//use stuff</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">someFactory(stuff) <span class="comment">// injecting stuff</span></span><br></pre></td></tr></table></figure></p>
+<p>I am using simple closure for dependency injection. It feels more natural.<br>But we still can’t replace angular’s module system right? Thus we need to use CommonJS (you can use <a href="http://browserify.org/" target="_blank" rel="external">browserify</a> or <a href="http://brunch.io/" target="_blank" rel="external">brunch</a>).<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stuff = <span class="built_in">require</span>(<span class="string">'./stuff'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> <span class="title">someFactory</span>(<span class="params"></span>)</span>&#123; <span class="comment">//and again we use closure</span></span><br><span class="line">	<span class="comment">//use stuff</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Why is that better? It is simple. It is better way for structuring your app - it gives you references and you can directly say where the dependency lives. It already works well for <strong>nodejs</strong>. It is compatible with existing package managers.</p>
+<p>I know that how JS modules should look like is a debatable topic. I think that CommonJS pattern quite usable and much better fit for JS than AMD or ES6 modules. Though I definitely think that Angular got it wrong.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2013/11/reactjs-mixing-with-backbone/">Reactjs mixing with Backbone</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2013-11-24T05:06:04.000Z">Nov 24 2013</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>Reactjs is a javascript librarby for building user interfaces opensourced by facebook just recently.</p>
+<p>Not long ago I felt that as a developer I have more or less two best options to build an app. Whether do it in #angular or #backbone. Now I feel that #react is taking best of angular, do it better and allows to use best parts of backbone.</p>
+<p>I hate Backbone Views and I hate $scope of angular, especially when it comes to directive scope and all &amp;-@-= stuff. Transclusion and scope is a double hell and I am not talking about digesting and performance yet.</p>
+<p>React has really small API and it does one thing, but does it really well. It abstracts DOM for you and optimizes the rendering part. So each time you need react to reflect state changes in the DOM it renders lightweight DOM in javascript and applies only diff to the real DOM. In that way rendering becomes really cheap unlike in angular. And that allows us to build apps with diffenrent patterns in mind.</p>
+<p>And here are some tips I got from several weeks of playing around #Reactjs</p>
+<h3 id="React_is_just_V">React is just V</h3><p>React needs other stuff like routes and models. I am taking them from Backbone.</p>
+<h3 id="Models_are_state">Models are state</h3><p>By default React have single state <code>this.state</code>. Which is not usually best solution. It appears that cleaner way is to have multiple states. Where <code>this.state</code> is not persisting state and backbone models are.</p>
+<p>In the React’s example you can find <a href="https://github.com/facebook/react/blob/master/examples/todomvc-backbone/js/app.js#L148" target="_blank" rel="external">BackboneMixin</a> but it has some flaws. Following one is better since it does proper cleanup.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span>  ModelMixin = &#123;</span><br><span class="line">  componentDidMount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Whenever there may be a change in the Backbone data, trigger a reconcile.</span></span><br><span class="line">    <span class="keyword">this</span>.getBackboneModels().forEach(<span class="keyword">this</span>.injectModel, <span class="keyword">this</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  componentWillUnmount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Ensure that we clean up any dangling references when the component is</span></span><br><span class="line">    <span class="comment">// destroyed.</span></span><br><span class="line">    <span class="keyword">this</span>.__syncedModels.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">model</span>) </span>&#123;</span><br><span class="line">      model.off(<span class="literal">null</span>, model.__updater, <span class="keyword">this</span>);</span><br><span class="line">    &#125;, <span class="keyword">this</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  injectModel: <span class="function"><span class="keyword">function</span>(<span class="params">model</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">this</span>.__syncedModels) <span class="keyword">this</span>.__syncedModels = [];</span><br><span class="line">    <span class="keyword">if</span>(!~<span class="keyword">this</span>.__syncedModels.indexOf(model))&#123;</span><br><span class="line">      <span class="keyword">var</span> updater = <span class="keyword">this</span>.forceUpdate.bind(<span class="keyword">this</span>, <span class="literal">null</span>);</span><br><span class="line">      model.__updater = updater;</span><br><span class="line">      model.on(<span class="string">'add change remove'</span>, updater, <span class="keyword">this</span>);</span><br><span class="line">      <span class="keyword">this</span>.__syncedModels.push(model);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In that way you can use same models in several nested components.</p>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;rootComponent <span class="literal">user</span>=<span class="string">"new UserModel(&#123;id: id&#125;)"</span>&gt;</span><br><span class="line">  &lt;contactComponent <span class="literal">user</span> = &#123;this.props.<span class="literal">user</span>&#125;/&gt;</span><br><span class="line">  &lt;userpicComponent <span class="literal">user</span> = &#123;this.props.<span class="literal">user</span>&#125;/&gt;</span><br><span class="line">&lt;/rootComponent&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2_way_binding">2 way binding</h3><p>It’s kinda logical to have 2 way binding with those Backbone models. <a href="https://github.com/facebook/react/tree/master/src/addons/link" target="_blank" rel="external">LinkedState</a> plugin is working only for state thus here is BindMixin wich does basically the same as LinkedState but for Backbone models.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span>  BindMixin = &#123;</span><br><span class="line">  bindTo: <span class="function"><span class="keyword">function</span>(<span class="params">model, key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      value: model.get(key),</span><br><span class="line">      requestChange: <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">          model.set(key, value);</span><br><span class="line">      &#125;.bind(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This mixin adds bindTo method that binds control with model property as simple as <code>this.bindTo(user, &#39;name&#39;)</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Hello = React.createClass(&#123;</span><br><span class="line">  mixins:[ModelMixin, BindMixin],</span><br><span class="line">  getBackboneModels: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">this</span>.props.instance]</span><br><span class="line">  &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> model = <span class="keyword">this</span>.props.instance;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span>&gt;</span>Hello &#123;model.get('initial')&#125;<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">valueLink</span>=<span class="value">&#123;this.bindTo(model,</span> '<span class="attribute">initial</span>')&#125;/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span></span><br></pre></td></tr></table></figure>
+<p>Here is working example: <a href="http://jsfiddle.net/djkojb/qZf48/24/" target="_blank" rel="external">http://jsfiddle.net/djkojb/qZf48/24/</a></p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2013/10/using-private-components-in-compy/">using private components in compy</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2013-10-21T14:09:02.000Z">Oct 21 2013</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>There are core limitations in component that makes hard to use private git repositories directly, unless you use github. Component FAQ <a href="https://github.com/component/component/wiki/F.A.Q#how-do-i-use-private-github-repositories" target="_blank" rel="external">proposes</a> to use <code>remotes</code> property and any web server that uses the same urls as Github.</p>
+<p><em>package.json</em><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  "compy":&#123;</span><br><span class="line">    ...</span><br><span class="line">    "remotes":["https://user:pass@raw.github.com"]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>But there is a better way to manage private components with any git server you like.</p>
+<h3 id="using_git_submodules_to_manage_private_components">using git submodules to manage private components</h3><p>Component supports <code>local</code> dependencies. That means it can serve components from any local folder you put in as local param in config.</p>
+<p><em>package.json</em><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  "compy":&#123;</span><br><span class="line">    ...</span><br><span class="line">    "paths":["local"],</span><br><span class="line">    "local":["component1","component2"]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>So if you want to use local dependencies, you should put git <a href="http://git-scm.com/book/en/Git-Tools-Submodules" target="_blank" rel="external">submodules</a> with those private components in the folder.</p>
+<p><a href="https://github.com/edjafarov/compy" target="_blank" rel="external">Compy</a> will serve them as usual components and you will manage them with git-cli.</p>
+<h3 id="adding_component_to_folder">adding component to folder</h3><p>You can add component to <code>local</code> folder like this:<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> local;</span><br><span class="line">submodule <span class="built_in">add</span> gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/chneukirchen/rack.git</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2013/10/socker-websocket-crud-over-engineio/">socker: websocket CRUD over engine.io</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2013-10-15T01:10:06.000Z">Oct 15 2013</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>One of substantial difference of using sockets instead of plain http requests is that we usually broadcast messages without expecting any response. While building <a href="http://github.com/openconf/jschat" target="_blank" rel="external">jschat</a> I thought it would be ehough. Though even for a chat we need the response if we want reliability and better experience. Think of “Pending” state of a message when sending it in offline mode.</p>
+<p>Raw libraries doesn’t provide any ‘response’ like functionality thus I had to build my own implementation. As a base for jschat we are using <a href="https://github.com/LearnBoost/engine.io" target="_blank" rel="external">engine.io</a> because <a href="https://github.com/learnboost/socket.io" target="_blank" rel="external">socket.io</a> is not supported for a long time and engine.io is kind of it’s successor and it’s awesome.</p>
+<h2 id="socker">socker</h2><p><a href="https://github.com/edjafarov/socker" target="_blank" rel="external">Socker</a> is inspired by <a href="https://github.com/visionmedia/express" target="_blank" rel="external">express</a>. Simple and lightweight implementation of middlewares, routing and error handling. Socker wrapping both engine.io and engine.io-client and providing additional methods that implement express like API.</p>
+<h3 id="setting_up_socker">setting up socker</h3><p>We can use engine.io and socker with or without express<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//backend</span></span><br><span class="line"><span class="keyword">var</span> engine = <span class="built_in">require</span>(<span class="string">'engine.io'</span>);</span><br><span class="line"><span class="keyword">var</span> socker = <span class="built_in">require</span>(<span class="string">'socker'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = <span class="built_in">require</span>(<span class="string">'express'</span>)();</span><br><span class="line"><span class="keyword">var</span> server = http.createServer(app);</span><br><span class="line">server.listen(nconf.get(<span class="string">'server:port'</span>));</span><br><span class="line">server = engine.attach(server);</span><br><span class="line"></span><br><span class="line">socker(server); <span class="comment">// wrapping server with additional methods</span></span><br><span class="line">server.on(<span class="string">'connection'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">socket</span>)</span>&#123;</span><br><span class="line">  socker.attach(socket);<span class="comment">// we are attaching socker to the socket</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// frontend</span></span><br><span class="line"><span class="keyword">var</span> socket = <span class="built_in">require</span>(<span class="string">'engine.io'</span>)(<span class="string">'ws://localhost'</span>);</span><br><span class="line"><span class="keyword">var</span> sockerClient = <span class="built_in">require</span>(<span class="string">'socker-client'</span>); <span class="comment">// we can use it as standalone though</span></span><br><span class="line">sockerClient(socket);</span><br></pre></td></tr></table></figure>
+<h3 id="sending_the_message_from_client">sending the message from client</h3><p>On the client we have additional <code>serve</code> method on the socket<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//socket.serve(&lt;optional&gt; route, &lt;optional&gt; message, &lt;required&gt; callback);</span></span><br><span class="line"></span><br><span class="line">socket.serve(&#123;message:<span class="string">"Hello world!"</span>&#125;, <span class="function"><span class="keyword">function</span><span class="params">(err, data)</span></span>&#123;</span><br><span class="line">  <span class="comment">// err contains error object if it was thrown</span></span><br><span class="line">  <span class="comment">// data is a response data</span></span><br><span class="line">&#125;)</span><br><span class="line">socket.serve(<span class="string">'READ /api/item/343'</span>, <span class="function"><span class="keyword">function</span><span class="params">(err, data)</span></span>&#123;</span><br><span class="line">  <span class="comment">// err contains error object if it was thrown</span></span><br><span class="line">  <span class="comment">// data is a response data</span></span><br><span class="line">&#125;)</span><br><span class="line">socket.serve(<span class="string">'CREATE /api/items'</span>, &#123;itemName : <span class="string">"foo"</span>&#125; <span class="function"><span class="keyword">function</span><span class="params">(err, data)</span></span>&#123;</span><br><span class="line">  <span class="comment">// err contains error object if it was thrown</span></span><br><span class="line">  <span class="comment">// data is a response data</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="handling_the_message_on_server">handling the message on server</h3><p>On the server we additionally have sock.use and sock.when methods. <code>sock.use</code> adds middleware handler. Middleware in our case instead of request and response gives socket and data objects.<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">server.sock.<span class="keyword">use</span><span class="params">(logger)</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logger</span><span class="params">(socket, data, next)</span>&#123;</span></span><br><span class="line">  <span class="comment">// socket is a socket object</span></span><br><span class="line">  <span class="comment">// data - the data object sent with `request`</span></span><br><span class="line">  console.<span class="built_in">log</span><span class="params">(data)</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// socket object have .json method to send a response</span></span><br><span class="line">  <span class="keyword">if</span><span class="params">(weNeedTo)</span> return socket.json<span class="params">(&#123;responseMessage: <span class="string">"bar"</span>&#125;)</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// or we can throw an error</span></span><br><span class="line">  <span class="keyword">if</span><span class="params">(weNeedToThrowError)</span> return next<span class="params">(<span class="string">"Error message"</span>)</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// if we need to pass to next handler</span></span><br><span class="line">  next<span class="params">()</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>socket</code> is a message context object. And you can pollute it whenever you like. The “session” context object is <code>socket.__proto__</code> so If you want to save some data for connection lifetime use prototype object.</p>
+<h3 id="handling_routing">handling routing</h3><p>Inside routing middlewares the route is already parsed and we have also socket.params object with all params from the route.<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server.sock.when('CREATE /api/items', checkItem, createItem);</span><br><span class="line">server.sock.when('READ /api/item/:id', getItem);</span><br><span class="line">function getItem(socket, data, next)&#123;</span><br><span class="line">  // socket.params<span class="comment">['id']</span> contains id from the route</span><br><span class="line">  // data <span class="keyword">is</span> a data sent</span><br><span class="line">  socket.json(&#123;<span class="keyword">room</span>:<span class="string">"name"</span>, id: 343&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Using the mask <code>METHOD uri</code> is not required for socker. In the same manner you can name your routes.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.sock.when(<span class="string">'Server, please, give me room with :id'</span>, callback);</span><br><span class="line"><span class="comment">//or</span></span><br><span class="line">server.sock.when(<span class="string">'Bloody server! I command you to stay on your knees and give all items you got.'</span>, callback);</span><br></pre></td></tr></table></figure></p>
+<h3 id="error_handling">error handling</h3><p>We can also customize error handling.<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">server</span><span class="class">.sock</span><span class="class">.use</span>(<span class="function">function</span>(err, socket, data, next)&#123;</span><br><span class="line">  <span class="tag">if</span>(err)&#123;</span><br><span class="line">    <span class="tag">socket</span><span class="class">.json</span>(&#123;<span class="attribute">type</span>:<span class="string">"ERROR"</span>, <span class="attribute">err</span>:err, <span class="attribute">code</span>: <span class="number">500</span>&#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>It is important to put <code>type : &quot;ERROR&quot;</code> because that is the way client will treat the message as error.</p>
+<h3 id="try_it">try it</h3><p>You got clean and simple API and you got some latency boost. You save roundtrip to your session storage and handshake time. And now with <a href="https://github.com/edjafarov/socker" target="_blank" rel="external">socker</a> moving from express REST API to socket based API is really simple.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2013/09/why-building-another-app-compiller/">why building another app compiler?</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2013-09-28T12:10:19.000Z">Sep 28 2013</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>When you are frontend developer and start doing node npm completely spoils you. Because unlike we used to it provides single and predictable way of adding/using 3rd party libs and snippets to your code.</p>
+<p>Frontend is more complex in many ways. It is more fragmented since there are html and css additionally to javascript and our code is running in different combinations of vm’s and platforms.</p>
+<p>Commonly used way of adding 3rd libs is a <code>/vendor</code> folder that holds bunch of unminified (if you’re lucky enough) files that were downloaded by someone ages ago. Maybe you will find comments inside that will give you an idea of what version of library is used, maybe not. Also what-load-first dependency management is completely your pain. You might have a master file with all the scripts loaded in ‘right’ order <img width="15" height="15" src="http://skypeblogs.files.wordpress.com/2011/07/0186-facepalm-30px.png?w=30&h=30">.</p>
+<p><a href="https://github.com/bower/bower" target="_blank" rel="external"><strong>Bower</strong></a> is doing great job adding more metadata to packages fixing some problemts. But <em>Bower is just a package manager (c)</em> and it doesnt load scripts. So again, you need to do additional job defining what-load-when relations.</p>
+<p>Even if you will use <a href="https://github.com/jrburke/requirejs" target="_blank" rel="external"><strong>require.js</strong></a> you need to configure 3rd libraries. Besides <strong>requirejs</strong> adds it’s own complexities into code. For example: do you know the difference between <code>require</code> and <code>define</code> functions? And frankly why do you need to know difference! You need something that just works.</p>
+<p>So at the end of a day we need package manager that will deliver libs into our app, require functionality that will handle script dependencies and builder that will wire all the thing together and give back 3 files: index.html, app.js and app.css</p>
+<h3 id="and_compy_can_do_it">and <a href="https://github.com/edjafarov/compy" target="_blank" rel="external">compy</a> can do it</h3><p><a href="https://github.com/component/component" target="_blank" rel="external"><strong>Componentjs</strong></a> does most of work already. <strong>Compy</strong> just wraps the concept in one solid solution.</p>
+<h4 id="component_package_manager"><strong>component package manager</strong></h4><p><strong>Componentjs</strong> was obvious choice. Unlike <strong>npm</strong> or <strong>bower</strong> component is really strict on what files considered a source. Which is not that important for server but really important for frontend.</p>
+<h4 id="local_require"><strong>local require</strong></h4><p><strong>Componentjs</strong> gives local require out of the box. Component’s require is synchronous. Your files are wrapped in scope and concatenated in one file. Your dependencies are already loaded then you require them. Thus you don’t break javascript and require becomes plain simple and clear.</p>
+<h4 id="builder"><strong>builder</strong></h4><p>Builder takes responsibility to compile out three files: app.js, app.css and index.html. app.js is built of js dependencies (components), precompiled templates and js source files. app.css is just concatenated css files and index.html generated automatically to eat js/css and run “main” file. Builder have bunch of plugins that allow to precompile sources. So you can use coffeescript, scss, jade, whatever. And just technically because we avoid on read/write cycle comparing to plain grunt it’s faster than grunt. And you can use mix of technologies require coffeescript from js and vice versa.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2013/08/compy-simple-way-of-building-webapps/">compy - simple way of building webapps</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2013-08-08T00:26:05.000Z">Aug 8 2013</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p><strong>Compy</strong> is a simple, ‘zero’ configuration web app builder/compiller integrated with client package manager <a href="https://github.com/component/component" target="_blank" rel="external">component</a>.<br>Although there is almost no configuration it gives you all flexibility to code the way you like.</p>
+<h3 id="Start">Start</h3><p>Install compy with <code>npm</code> :<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install compy -g</span><br></pre></td></tr></table></figure></p>
+<p>To start an app all you need is to tell <strong>compy</strong> where is the beginning. To do that you need <code>package.json</code> file with <code>compy.main</code> property pointing to main js file of your app.<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">name</span>" : <span class="value"><span class="string">"app"</span></span>,</span><br><span class="line">  "<span class="attribute">compy</span>" : <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">main</span>" : <span class="value"><span class="string">"appstart.js"</span></span><br><span class="line">  </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>appstart.js</code> file will be executed right after the page load.</p>
+<p>To compile app, just run <code>$compy compile</code></p>
+<p><strong>Compy</strong> will generate <code>./dist</code> folder with <em>app.js</em>, <em>app.css</em> and <a href="https://github.com/edjafarov/compy/blob/master/index.html" target="_blank" rel="external"><em>index.html</em></a>. All css in your directory will be concatenated/minified into <em>app.css</em> file.</p>
+<p>Compy have static server so you can check the result with<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ compy server [watch]</span><br></pre></td></tr></table></figure></p>
+<p>adding <em>watch</em> option will recompile the app and livereload the changes in a browser.</p>
+<h3 id="Components">Components</h3><p>Most powerful part of compy local require and integration with <a href="https://github.com/component/component" target="_blank" rel="external">component</a>.</p>
+<p>To install jquery:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ compy install jquerycomp/jquery</span><br></pre></td></tr></table></figure></p>
+<p>to use jquery in code:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $ = <span class="built_in">require</span>(<span class="string">'jquery'</span>);</span><br><span class="line">$(<span class="built_in">document</span>.body).html(<span class="string">"Hallo world"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>Local require will work the same as in node.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//filename: add.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//filename: appstart.js</span></span><br><span class="line"><span class="keyword">var</span> add = <span class="built_in">require</span>(<span class="string">'./add'</span>);</span><br><span class="line">add(<span class="number">2</span>,<span class="number">2</span>); <span class="comment">//4</span></span><br></pre></td></tr></table></figure>
+<h3 id="Plugins">Plugins</h3><p><strong>compy</strong> support <a href="https://github.com/component/component" target="_blank" rel="external">component</a>‘s plugins.</p>
+<ul>
+<li><a href="https://github.com/rschmukler/component-stylus-plugin" target="_blank" rel="external">rschmukler/component-stylus-plugin</a> — precompile stylus</li>
+<li><a href="https://github.com/segmentio/component-jade" target="_blank" rel="external">segmentio/component-jade</a> — precompile jade templates</li>
+<li><a href="https://github.com/anthonyshort/component-coffee" target="_blank" rel="external">anthonyshort/component-coffee</a> - require CoffeeScript files as scripts</li>
+<li><a href="https://github.com/anthonyshort/component-sass" target="_blank" rel="external">anthonyshort/component-sass</a> - compile Sass files using node-sass</li>
+<li><a href="https://github.com/kewah/component-builder-handlebars" target="_blank" rel="external">kewah/component-builder-handlebars</a> - precompile Handlebars templates</li>
+<li><a href="https://github.com/ericgj/component-hogan" target="_blank" rel="external">ericgj/component-hogan</a> - Mustache transpiler for component (using Hogan)</li>
+<li><a href="https://github.com/segmentio/component-sass" target="_blank" rel="external">segmentio/component-sass</a> — Sass transpiler for component</li>
+<li><a href="https://github.com/segmentio/component-json" target="_blank" rel="external">segmentio/component-json</a> — Require JSON files as Javascript.</li>
+<li><a href="https://github.com/queckezz/component-roole" target="_blank" rel="external">queckezz/component-roole</a> — Compile <a href="http://roole.org" target="_blank" rel="external">Roole</a> files</li>
+<li><a href="https://github.com/Wizcorp/component-less" target="_blank" rel="external">Wizcorp/component-less</a> - <a href="https://github.com/less/less.js" target="_blank" rel="external">LESS</a> transpiler for component-builder</li>
+<li><a href="https://github.com/segmentio/component-markdown" target="_blank" rel="external">segmentio/component-markdown</a> - Compile Markdown templates and make them available as Javascript strings.</li>
+</ul>
+<p>Given that you can use those to work with language/template you want.<br>For example to use coffeescript you will need to install plugin in your root folder.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install component-coffee</span><br></pre></td></tr></table></figure></p>
+<p>Now after recompilation all your coffee files will be used as javascript. That also means you can use both js and coffee files in same repo.</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#filename: add.coffee</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">(a, b)</span> =&gt;</span></span><br><span class="line">  a + b</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//filename: appstart.js</span></span><br><span class="line"><span class="keyword">var</span> add = <span class="built_in">require</span>(<span class="string">'./add'</span>);</span><br><span class="line">add(<span class="number">2</span>,<span class="number">2</span>); <span class="comment">//4</span></span><br></pre></td></tr></table></figure>
+<h3 id="And_there_is_more">And there is more</h3><p><strong>Compy</strong> is built ontop of grunt. Basically it is just <a href="https://github.com/edjafarov/compy/blob/master/Gruntfile.js" target="_blank" rel="external">grunt</a> setup. So no magic here. Though lots of stuff available:</p>
+<ul>
+<li>components support</li>
+<li>local <code>require</code></li>
+<li>supporting coffeescript, sass, jade and other <a href="#plugins">plugins</a></li>
+<li>static server + livereload</li>
+<li>karma runner</li>
+<li>grunt extendable</li>
+</ul>
+<p>May the <a href="https://github.com/edjafarov/compy/" target="_blank" rel="external">force</a> be with you!</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+
+
+<nav id="pagination">
+  
+    <a href="/" class="alignleft prev">Prev</a>
+  
+  
+  <div class="clearfix"></div>
+</nav></div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Eldar Djafarov
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<a href="http://stfalcon.github.io/euromaidan/" class="em-ribbon" style="position: absolute; left:0; top:0; width: 90px; height: 90px; background: url('http://stfalcon.github.io/euromaidan/img/em-ribbon.png'); z-index: 2013; border: 0;" title="Розмісти стрічку з символікою України і ЄС на своєму сайті!" target="_blank"></a>
+</body>
+</html>

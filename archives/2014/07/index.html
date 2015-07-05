@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives: 2014/7 | @edjafarov</title>
+  <meta name="author" content="Eldar Djafarov">
+  
+  <meta name="description" content="edjafarov blog, javascript, nodejs, compy, component">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="@edjafarov"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="@edjafarov" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css?v=1" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-317979-12', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">@edjafarov</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+<div class="alignleft" style="margin-top: 15px">
+
+
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="wrapper">
+<h2 class="archive-title">2014/7</h2>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2014/07/semantic-styling/">semantic styling</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2014-07-22T05:27:08.000Z">Jul 22 2014</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>Driving from <a href="http://odessajs.org.ua/" target="_blank" rel="external">#OdessaJs</a> with <a href="https://twitter.com/listochkin" target="_blank" rel="external">@listochkin</a> we had discussed the future of web development and our perceptions of what makes sense. It was priceless talk. And lot of things were formulated and validated for me. One of concepts popped out is the “semantic styling”.</p>
+<p>Not long ago there was a hype around semantic layout. Which is a great concept around giving more sense to layout. But it looks like nobody noticed the next big revolution in styles. The twitter did it. Twitter <a href="http://getbootstrap.com/" target="_blank" rel="external">bootstrap</a> has formulated <strong>smallest footprint of layout + styles</strong> for common design patterns.</p>
+<p>So right now everybody agrees that button can be <code>&lt;button&gt;</code> as well as <code>&lt;a&gt;</code> and it should look the same and dropdown will look like:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"dropdown"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn btn-default dropdown-toggle"</span>&gt;</span>Dropdown<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#1"</span>&gt;</span>Action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#2"</span>&gt;</span>Another action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>and nobody tries to invent something else. Bootstrap made a standart. What we can call “semantic styles”.</p>
+<p>What is also great about twitter bootstrap that it is built with less thus you can use parts of it. The variables in bootstrap are mainly colors and you can override them. Thus your css (less) code consists of two parts: the <strong>logic</strong> (the relations between html elements/classes, that describes the footprint) and the <strong>presentation</strong> (that makes the design individualistic - variables that change your colors and paddings)</p>
+<p>With TWBS we have a vocabulary of semantic styles that represent commonly used design patterns and we can adjust them to branded design style overriding less variables.</p>
+<p>Unlike bootstrap does though I think this vocabulary should be managed in a different way.</p>
+<p>Bootstrap has just a lot of files in twitter bootstrap repo. Package managers on other hand  provide better development experience, more abilities to handle dependencies and structure the code. I prefer <a href="https://github.com/component/component" target="_blank" rel="external">components</a> style over <a href="http://bower.io/" target="_blank" rel="external">bower</a> thus I would like and I believe it is possible to handle vocabulary of semantic styles in the same manner. But instead of CommonJs <code>require(&quot;modulename&quot;)</code> being able to (<strong>CommonLess</strong> - why not?) <code>@import &quot;buttons&quot;</code> without putting complete path to the component.</p>
+<p>So from a development perspective we will just need to install some “less terms” as a components (example: <code>$ component install twbs/forms twbs/buttons twbs/grid</code>). And then inside my main.less file:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//importing vocabulary</span><br><span class="line">@import "forms"</span><br><span class="line">@import "buttons"</span><br><span class="line">@import "grid"</span><br><span class="line"></span><br><span class="line">//overriding default variables to adjust to branded design.</span><br><span class="line">$brand-success: #AAAAAA;</span><br><span class="line">$brand-default: #BBBBBB;</span><br></pre></td></tr></table></figure>
+<p>Almost everything is ready. <strong>CommonLess</strong> thing is not there yet. So far we just need to put complete relative path for less/sass components we use.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+
+</div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Eldar Djafarov
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<a href="http://stfalcon.github.io/euromaidan/" class="em-ribbon" style="position: absolute; left:0; top:0; width: 90px; height: 90px; background: url('http://stfalcon.github.io/euromaidan/img/em-ribbon.png'); z-index: 2013; border: 0;" title="Розмісти стрічку з символікою України і ЄС на своєму сайті!" target="_blank"></a>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>PromisePipe: cross process homogenous Promise chains | @edjafarov</title>
+  <meta name="author" content="Eldar Djafarov">
+  
+  <meta name="description" content="edjafarov blog, javascript, nodejs, compy, component">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="PromisePipe: cross process homogenous Promise chains"/>
+  <meta property="og:site_name" content="@edjafarov"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="@edjafarov" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css?v=1" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-317979-12', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">@edjafarov</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+<div class="alignleft" style="margin-top: 15px">
+
+
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">PromisePipe: cross process homogenous Promise chains</h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2015-06-17T11:42:39.000Z">Jun 17 2015</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>I used to be a backend developer and even earlier I was a frontend developer. I guess I was good backend dev for my frontend colleagues at that time. Since I was thinking about API’s as a consumer of that API.</p>
+<p>I wasn’t ever that lucky as a frontend dev. Building API is hard. It usually takes a lot of time and wtf’s to get same vision on how communication with the server should work.  We start with REST API, then everyone has its own vision on what is REST. Each modification of API is a pain and it always take a lot of time and talks to make a change.</p>
+<p>Today as frontend developer I usually describe resource calls with Promises. I use promises because I find their chaining API really nice to describe the potentially asynchronous business logic.</p>
+<p>It might be that any business logic could be represented as a chain of data transformations. Even saving of data in DB is a transformation of data into item ID.</p>
+<p>Lets check following code for a simple frontend business logic built with Promises:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve(item)</span><br><span class="line">  .then(validateItem)</span><br><span class="line">  .then(postItem)</span><br><span class="line">  .then(addItem)</span><br><span class="line">  .catch(handleError)</span><br></pre></td></tr></table></figure>
+<p><code>postItem</code> here will return a Promise that will be resolved when the server replies.</p>
+<p>On server side, we would probably have some express route:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/api/items'</span>,</span><br><span class="line">  validateItemMiddleware,</span><br><span class="line">  saveItemInDBMiddleware,</span><br><span class="line">  returnItemMiddleware)</span><br></pre></td></tr></table></figure>
+<p>If Promises would appear earlier, I think nodejs <a href="http://expressjs.com/" target="_blank" rel="external">express</a> would use them instead of middlewares.<br>Built with Promise chains the server will probably look something like:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/api/items'</span>)</span><br><span class="line">  .then(validateItem)</span><br><span class="line">  .then(saveItemInDB)</span><br><span class="line">  .then(returnItem)</span><br></pre></td></tr></table></figure>
+<p>Since any Promise could be constructed out of composition of Promises lets imagine for a second that we do not have a frontend and backend - our code will look like:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> postItem = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(data)</span><br><span class="line">    .then(validateItem)</span><br><span class="line">    .then(saveItemInDB)</span><br><span class="line">    .then(returnItem)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve(item)</span><br><span class="line">  .then(validateItem)</span><br><span class="line">  .then(postItem)</span><br><span class="line">  .then(addItem)</span><br><span class="line">  .catch(handleError)</span><br></pre></td></tr></table></figure>
+<p>Obviously in that case we would need no API at all and we won’t waste time deciding how to name the Url and what method to use right?</p>
+<p>And we can go even deeper:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve(item)</span><br><span class="line">  .then(validateItem)</span><br><span class="line">  .then(validateItemServer)</span><br><span class="line">  .then(saveItemInDB)</span><br><span class="line">  .then(addItem)</span><br><span class="line">  .catch(handleError)</span><br></pre></td></tr></table></figure>
+<p>Of cause, you can’t do it with plain promises - but with <a href="https://github.com/edjafarov/PromisePipe" target="_blank" rel="external">PromisePipe</a> you can.</p>
+<p>PromisePipe is a builder for reusable promise chains.<br>It has more control over the execution of chains and can control how to execute each of them.</p>
+<p>PromisePipe is a singleton. You build chains of business logic and run the code both on server and client. Chains marked to be executed on the server will be executed on the server only and chains marked to be executed in the client will be executed in the client. You need to implement methods in PromisePipe to pass messages from the client to the server. And it is up to you what transport to use.</p>
+<p><img src="/images/PromisePipe.png" alt="PromisePipe"></p>
+<p>So you need to write some boilerplate code that would pass messages around between server and client to try it (<a href="https://github.com/edjafarov/PromisePipe/tree/master/example/simple" target="_blank" rel="external">simple example</a>). So far I wrote examples with <a href="http://socket.io/" target="_blank" rel="external">socket.io</a> as a transport but there is no problem to use plain HTTP request or any protocol that can pass messages around.</p>
+<p><img src="/images/Ck1tyZ5qA8.gif" alt="simple example"></p>
+<p>With PromisePipe our code example would look like:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> doOnServer = PromisePipe.in(<span class="string">'server'</span>)</span><br><span class="line"><span class="keyword">var</span> addItemAction = PromisePipe()</span><br><span class="line">  .then(validateItem)</span><br><span class="line">  .then(doOnServer(validateItemServer))</span><br><span class="line">  .then(doOnServer(saveItemInDB))</span><br><span class="line">  .then(addItem)</span><br><span class="line">  .catch(handleError);</span><br><span class="line">addItemAction(item) <span class="comment">// will pass complete chain</span></span><br></pre></td></tr></table></figure>
+<p>When execution comes to <code>validateItemServer</code> chain PromisePipe is passing execution to server with execution message and proceeds there. <code>validateItemServer</code> and <code>saveItemInDB</code> are executing on the server side and the message passed back to a client to proceed execution starting with <code>addItem</code>.</p>
+<p>PromisePipe allows to extend API with custom methods and you can build expressive DSL that will describe business logic:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> doOnServer = PromisePipe.in(<span class="string">'server'</span>)</span><br><span class="line"><span class="keyword">var</span> addItemAction = PromisePipe()</span><br><span class="line">  .validate(<span class="string">'item'</span>)</span><br><span class="line">  .validateServer(<span class="string">'item'</span>)</span><br><span class="line">  .db.save.Item()</span><br><span class="line">  .then(addItem)</span><br><span class="line">  .catch(handleError);</span><br><span class="line">addItemAction(item) <span class="comment">// will pass complete chain</span></span><br></pre></td></tr></table></figure>
+<p>For example, here is a <a href="https://github.com/edjafarov/mongo-pipe-api" target="_blank" rel="external">mongodb API</a> for PromisePipe. And here is an example of <a href="https://github.com/edjafarov/PromisePipe/tree/master/example/mongotodo" target="_blank" rel="external">todo-app</a>(<a href="bit.ly/promisepipe-todo">live</a>) which uses this “mongo-pipe-api”. <code>validateServer</code> and “mongo-pipe-api” should be marked as serverside methods. So, they would be executed on the server only.</p>
+<p>PromisePipe allows to build business logic out of simple transformation chains which can run in different processes while the logic itself still simple and homogenous.</p>
+<p>With PromisePipes you get:</p>
+<ul>
+<li><p><strong>simplicity</strong></p>
+<p>  Build up your logic in a functional manner with simple transformations. Forget about the process to process communication and save time for building business logic.</p>
+</li>
+<li><p><strong>testability</strong></p>
+<p>  Each chain can be tested independently. It is also easy to assemble pieces of logic together and test parts in isolation.</p>
+</li>
+<li><p><strong>isomorphism</strong></p>
+<p>  PromisePipe was created to work in a cross process environment. You will get isomorphic business logic out of the box if you build chains with isomorphism in mind. So if you do not use any env specific API’s in your logic you can run pipe in a single process or expect the chain to work in multiple environments like browser and server.</p>
+</li>
+<li><p><strong>scalability</strong></p>
+<p>  Each chain could be running in a separate process without much effort. That doesn’t mean you have scalability out of the box. But you have a nice way to distribute your load over multiple processes.</p>
+</li>
+<li><p><strong>frontend guys can build complete business logic</strong></p>
+<p>  Chains are easy to compose together. The main idea behind is to allow frontend guys to use simple building blocks to build backend functionality encapsulating complexity inside meaningful business logic chains.</p>
+</li>
+</ul>
+<p><img src="/images/homogenous-code.png" alt="homogenous code"></p>
+<p>I believe PromisePipe will help us to push microservice architectures forward. The homogenous business logic allows decoupling of logic from process to process communication. Which makes no difference between code that is running in monolith and miscroservice architecture.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      Latest:
+      <ul class="list-unstyled">
+      
+         <li>
+              <a href="/2015/06/PromisePipe-debugging/">PromisePipe: debugging</a>
+            </li>
+          
+         <li>
+              <a href="/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/">PromisePipe: cross process homogenous Promise chains</a>
+            </li>
+          
+         <li>
+              <a href="/2015/06/Responsibility-is-the-best-Motivation/">Responsibility is the best Motivation</a>
+            </li>
+          
+         <li>
+              <a href="/2015/01/the-holy-grail-promise-pipes/">The Holy Grail: promise pipes</a>
+            </li>
+          
+         <li>
+              <a href="/2014/09/proper-node-webkit-desktop-notifications/">proper node-webkit desktop notifications</a>
+            </li>
+          
+         <li>
+              <a href="/2014/07/semantic-styling/">semantic styling</a>
+            </li>
+          
+         <li>
+              <a href="/2014/06/node-webkit-autoupdate/">node-webkit autoupdate</a>
+            </li>
+          
+         <li>
+              <a href="/2014/05/framework-vs-microlib-architecture/">framework vs microlib architecture</a>
+            </li>
+          
+         <li>
+              <a href="/2014/04/angular-is-evil-overengineering/">Angularjs is evil: overengineering hell</a>
+            </li>
+          
+         <li>
+              <a href="/2014/04/managers-are-taking-your-projects-breath/">managers are taking your project&#39;s breath</a>
+            </li>
+          
+      </ul>
+      
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  <section id="comment">
+</section>
+</div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Eldar Djafarov
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<a href="http://stfalcon.github.io/euromaidan/" class="em-ribbon" style="position: absolute; left:0; top:0; width: 90px; height: 90px; background: url('http://stfalcon.github.io/euromaidan/img/em-ribbon.png'); z-index: 2013; border: 0;" title="Розмісти стрічку з символікою України і ЄС на своєму сайті!" target="_blank"></a>
+</body>
+</html>

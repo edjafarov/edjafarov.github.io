@@ -1,0 +1,646 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives: 2014 | @edjafarov</title>
+  <meta name="author" content="Eldar Djafarov">
+  
+  <meta name="description" content="edjafarov blog, javascript, nodejs, compy, component">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="@edjafarov"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="@edjafarov" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css?v=1" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-317979-12', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">@edjafarov</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+<div class="alignleft" style="margin-top: 15px">
+
+
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="wrapper">
+<h2 class="archive-title">2014</h2>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2014/09/proper-node-webkit-desktop-notifications/">proper node-webkit desktop notifications</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2014-09-16T15:39:41.000Z">Sep 16 2014</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>Desktop notifications plays an important role in success of desktop apps since is allowing to bring attention of a user when something is happenning.</p>
+<p>So far in node-webkit we have several solutions for desktop notifications.</p>
+<p>1) <a href="https://github.com/rogerwang/node-webkit/issues/27" target="_blank" rel="external">HTML5 notifications</a></p>
+<ul>
+<li><strong>pros:</strong> is a html5 standart, same as in web.</li>
+<li><strong>cons:</strong> looks differently in differen OSes, low interaction capabilities, have bugs for node-webkit:)</li>
+</ul>
+<p>2) <a href="https://github.com/robrighter/nw-desktop-notifications" target="_blank" rel="external">NW Desktop Notifications</a></p>
+<ul>
+<li><strong>pros:</strong> customizable, same in different OSes.</li>
+<li><strong>cons:</strong> no interaction, animations are ugly, API is not a standart.</li>
+</ul>
+<p>3) <a href="https://github.com/mikaelbr/node-notifier" target="_blank" rel="external">node-notifier</a></p>
+<ul>
+<li><strong>pros:</strong> you can do it from node, you can use standart OSes notification systems (win8 is coming soon!).</li>
+<li><strong>cons:</strong> looks differently in differen OSes, low interaction.</li>
+</ul>
+<p>All those solutions were not working for me. Thus I had to create another one. Based on same idea as NW Desktop Notifications but implemented a little bit better.</p>
+<p><a href="https://github.com/edjafarov/node-webkit-desktop-notification" target="_blank" rel="external">node-webkit-desktop-notifications</a> should become drop-in replacement for HTML5 notifications. So ideally you just use it instead of html5 Notification with some more API around. And if the code is executed in node-webkit context it does all kinds of rich notifications otherwise it degrades to html5.</p>
+<p>Additionally to simple notifications you will get ability to build any complex interations inside your notification. Like change layout, buttons, textfields or gestures.</p>
+<h3 id="how_to_build_interactive_notifications">how to build interactive notifications</h3><p>The notification itself is a window. Thus it has it’s own context, html and css/javascript. Rich interactions are built on events. You can emit events on the window object inside notification window and catch them on DesktopNotification instance inside your application. So you can build any kind of presentation and keep interaction inside your appcode.</p>
+<h3 id="use_it">use it</h3><p>To use the lib in your app you need to take 2 files:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">src/desktopNotification<span class="class">.js</span></span><br><span class="line">src/desktopNotification.html</span><br></pre></td></tr></table></figure>
+<p>You need to place them in same folder of your app. Load <code>desktopNotification.js</code> to your index.html to use the <code>DesktopNotification</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> notif = <span class="keyword">new</span> DesktopNotification(<span class="string">'Hello'</span>, &#123;body: <span class="string">'World'</span>&#125;);</span><br><span class="line">notif.show();</span><br></pre></td></tr></table></figure>
+<p>check other ways to use <code>DesktopNotification</code> in <a href="https://github.com/edjafarov/node-webkit-desktop-notification/blob/master/src/index.html" target="_blank" rel="external">example</a>.</p>
+<h3 id="try_live">try live</h3><ul>
+<li>Fetch the <a href="https://github.com/edjafarov/node-webkit-desktop-notification" target="_blank" rel="external">repo</a></li>
+<li>npm install</li>
+<li>npm start</li>
+<li>find an app for your OS in build/node-webkit-desktop-notification</li>
+<li><a href="http://screencast.com/t/bUxB6vNvW8BN" target="_blank" rel="external">play</a></li>
+</ul>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2014/07/semantic-styling/">semantic styling</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2014-07-22T05:27:08.000Z">Jul 22 2014</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>Driving from <a href="http://odessajs.org.ua/" target="_blank" rel="external">#OdessaJs</a> with <a href="https://twitter.com/listochkin" target="_blank" rel="external">@listochkin</a> we had discussed the future of web development and our perceptions of what makes sense. It was priceless talk. And lot of things were formulated and validated for me. One of concepts popped out is the “semantic styling”.</p>
+<p>Not long ago there was a hype around semantic layout. Which is a great concept around giving more sense to layout. But it looks like nobody noticed the next big revolution in styles. The twitter did it. Twitter <a href="http://getbootstrap.com/" target="_blank" rel="external">bootstrap</a> has formulated <strong>smallest footprint of layout + styles</strong> for common design patterns.</p>
+<p>So right now everybody agrees that button can be <code>&lt;button&gt;</code> as well as <code>&lt;a&gt;</code> and it should look the same and dropdown will look like:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"dropdown"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn btn-default dropdown-toggle"</span>&gt;</span>Dropdown<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"dropdown-menu"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#1"</span>&gt;</span>Action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">li</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#2"</span>&gt;</span>Another action<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>and nobody tries to invent something else. Bootstrap made a standart. What we can call “semantic styles”.</p>
+<p>What is also great about twitter bootstrap that it is built with less thus you can use parts of it. The variables in bootstrap are mainly colors and you can override them. Thus your css (less) code consists of two parts: the <strong>logic</strong> (the relations between html elements/classes, that describes the footprint) and the <strong>presentation</strong> (that makes the design individualistic - variables that change your colors and paddings)</p>
+<p>With TWBS we have a vocabulary of semantic styles that represent commonly used design patterns and we can adjust them to branded design style overriding less variables.</p>
+<p>Unlike bootstrap does though I think this vocabulary should be managed in a different way.</p>
+<p>Bootstrap has just a lot of files in twitter bootstrap repo. Package managers on other hand  provide better development experience, more abilities to handle dependencies and structure the code. I prefer <a href="https://github.com/component/component" target="_blank" rel="external">components</a> style over <a href="http://bower.io/" target="_blank" rel="external">bower</a> thus I would like and I believe it is possible to handle vocabulary of semantic styles in the same manner. But instead of CommonJs <code>require(&quot;modulename&quot;)</code> being able to (<strong>CommonLess</strong> - why not?) <code>@import &quot;buttons&quot;</code> without putting complete path to the component.</p>
+<p>So from a development perspective we will just need to install some “less terms” as a components (example: <code>$ component install twbs/forms twbs/buttons twbs/grid</code>). And then inside my main.less file:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//importing vocabulary</span><br><span class="line">@import "forms"</span><br><span class="line">@import "buttons"</span><br><span class="line">@import "grid"</span><br><span class="line"></span><br><span class="line">//overriding default variables to adjust to branded design.</span><br><span class="line">$brand-success: #AAAAAA;</span><br><span class="line">$brand-default: #BBBBBB;</span><br></pre></td></tr></table></figure>
+<p>Almost everything is ready. <strong>CommonLess</strong> thing is not there yet. So far we just need to put complete relative path for less/sass components we use.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2014/06/node-webkit-autoupdate/">node-webkit autoupdate</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2014-06-10T15:42:59.000Z">Jun 10 2014</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p><a href="https://github.com/rogerwang/node-webkit" target="_blank" rel="external">Node-webkit</a> allows you to build cross platform desktop application with <a href="https://nodejs.org" target="_blank" rel="external">node</a> and JavaScript. Though building desktop application unlike pure online webapp means you got no control over the code after the app was installed. Thus releases are painful and bugs after the code was released are frustrating.</p>
+<p>Right now desktop apps usually update themselves. <a href="https://github.com/rogerwang/node-webkit/issues/233" target="_blank" rel="external">Node-webkit do not have</a> this functionality out of the box. Which is reasonable because such functionality would hardly rely on specific implementation.</p>
+<p>So I created <a href="https://github.com/edjafarov/updater" target="_blank" rel="external">webkit-updater</a>. It relies on suggestion that your app will be packaged with <a href="https://www.npmjs.org/package/grunt-node-webkit-builder" target="_blank" rel="external">grunt-node-webkit-builder</a>, compressed with <a href="https://github.com/gruntjs/grunt-contrib-compress" target="_blank" rel="external">grunt-contrib-compress</a> and with windows package unzip.exe will be packaged. Basically the example of packaging app you can find <a href="https://github.com/edjafarov/updater/blob/master/gruntfile.js" target="_blank" rel="external">here</a>.</p>
+<p><a href="https://github.com/edjafarov/updater" target="_blank" rel="external">webkit-updater</a> is working/tested under <a href="http://screencast.com/t/OXyC5xoA" target="_blank" rel="external">mac</a>, <a href="http://screencast.com/t/MSTKqVS3" target="_blank" rel="external">win</a> and <a href="http://screencast.com/t/Je2ptbHhP" target="_blank" rel="external">linux</a>(32/64).</p>
+<h3 id="how_does_it_work">how does it work</h3><p>It gives you <a href="https://github.com/edjafarov/updater/blob/master/README.md#api" target="_blank" rel="external">api</a> to:</p>
+<ol>
+<li>Check the manifest for version.</li>
+<li>If the version is different from local one download new package to temp.</li>
+<li>Unpack the package to temp.</li>
+<li>Run new version from temp and exit the process.</li>
+<li>The new version from temp will copy itself to original folder.</li>
+<li>The new version will run itself from original folder and exit the process.</li>
+</ol>
+<p>you should build this logic by yourself though. As a reference you can use <a href="https://github.com/edjafarov/updater/blob/master/app/index.html" target="_blank" rel="external">example</a>.</p>
+<h3 id="what_are_the_plans">what are the plans</h3><p>There should be bugs, probably. Need to stabilize it and test it extensively in real world app.</p>
+<p>It would also be great to have different rates of updates:</p>
+<ul>
+<li>update assets only without page reload (<em>.</em>.x)</li>
+<li>update assets with page reload (<em>.x.</em>)</li>
+<li>update assets and node-webkit engine - full cycle (x.<em>.</em>)</li>
+</ul>
+<p>There is a <a href="https://github.com/rogerwang/node-webkit/wiki/The-solution-of-lacking-libudev.so.0" target="_blank" rel="external">bug</a> for newer versions of linux. Updater should resolve things like that. Also there should be some preInstall and postInstall scripts handling.</p>
+<p>You are welcome to <a href="https://github.com/edjafarov/updater" target="_blank" rel="external">use and commit</a>.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2014/05/framework-vs-microlib-architecture/">framework vs microlib architecture</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2014-05-24T03:48:44.000Z">May 24 2014</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>Just  recently seems like I understood why holywars between programmers are happening. During <a href="http://en.wikipedia.org/wiki/Euromaidan" target="_blank" rel="external">revolution</a> I basically saw the same holywar between people that  believe that their truth is the only truth. Why even for smart people from both sides it is hard to negotiate for the same vision? I believe that the reason is that they have different <strong>values</strong>.</p>
+<p>We often underestimate how much common values important for us to feel comfortable and productive in a team. We often do not care about having common values while looking for new jobs , we care about salaries more. Agree we make decision of accepting offer based on many factors, shared values as well though we do that unconsciously.</p>
+<p>JavaScript community is quite inhomogeneous so you can see all kinds of values there. So far I can distinct two types of people, those who love classical OOP languages with strict and stable structure and patterns and people that love alternative languages that doesn’t have determined patterns and have ‘unexpected’ flexibilities. While talking with first group of people seems like they afraid of chaos and are intolerable for any unpredictability. The second one so bored with structures and solutions that are running away from enterprises like from hell. I know very few people that are ok with both.</p>
+<p>So here I am coming to <strong>framework</strong> vs <strong>microlib</strong> architecture discourse. Inside JavaScript community itself we have kind of holywar around this topic. Now I feel it doesn’t make sense to participate in this war since final decision is always based on our values and that means that “common sense” that we are appealing to is quite individual.</p>
+<p>PS: Main question in any job interview should be around values, always!</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2014/04/angular-is-evil-overengineering/">Angularjs is evil: overengineering hell</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2014-04-28T07:56:09.000Z">Apr 28 2014</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>This I hope is the last post about how Angular will bring you to a world of pain.</p>
+<ul>
+<li><a href="/2014/02/angularjs-is-evil-dependency-injection/">Angularjs is evil: dependency injection</a></li>
+<li><a href="/2014/04/angularjs-is-evil-the-scope-horror/">Angularjs is evil: the scope horror</a></li>
+<li><a href="/2014/04/angular-is-evil-overengineering/">Angularjs is evil: overengineering hell</a></li>
+</ul>
+<p>Recently I stumbled on this <a href="http://codeofrob.com/entries/you-have-ruined-javascript.html" target="_blank" rel="external">Angularjs hate article</a> that I am totally alligned with on emotional level. Angular is clearly overengineering. And unlike some may say It is not giving you exclusive scalability.</p>
+<p>I would compare Angular to React. I know that those are not comparable. But I believe that React based architecture is something that beats Angular solution in terms of simplicity and scalability.</p>
+<p><strong>React vs AngularJS by number of concepts to learn</strong></p>
+<ul>
+<li>React stack: 4 (everything is a component, some components have state, you may use model instead, Commonjs modules, router).</li>
+<li>AngularJS: 7 (modules, router, controllers, directives, scopes, templates, services, filters).</li>
+</ul>
+<p>There are twice more concepts to learn for Angular than React. Not even saying that React’s concepts are much more simple. For example you have controller and directive with templates that do more or less the same things. With React you have component only as a building block of your application. We all know that simplicity scales better, right?</p>
+<p><strong>directive vs component</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Angular</span></span><br><span class="line">App.directive(<span class="string">'myDirective'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    restrict: <span class="string">'E'</span>,</span><br><span class="line">    transclude: <span class="literal">true</span>,</span><br><span class="line">    scope: &#123;</span><br><span class="line">   	  link: <span class="string">'@link'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    template: <span class="string">'&lt;a href="#/&#123;&#123;link&#125;&#125;" ng-transclude&gt;&lt;/a&gt;'</span>,</span><br><span class="line">    link: <span class="function"><span class="keyword">function</span> (<span class="params">scope, element, attrs</span>) </span>&#123;</span><br><span class="line">	  <span class="comment">//do stuff with scope</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//usage</span></span><br><span class="line">&lt;myDirective link=<span class="string">'somewhere'</span>&gt;<span class="xml"><span class="tag">&lt;<span class="title">span</span>&gt;</span>GO<span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;/<span class="title">myDirective</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//React</span></span><br><span class="line"><span class="keyword">var</span> myComponent = React.createClass(&#123;</span><br><span class="line">  componentDidMount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//do stuff with this.props</span></span><br><span class="line">  &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">href</span>=<span class="value">&#123;'#</span>/' + <span class="attribute">this.props.link</span>&#125;&gt;</span>&#123;this.props.children&#125;<span class="tag">&lt;/<span class="title">div</span>&gt;</span>;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//usage</span></span><br><span class="line">&lt;myComponent link=<span class="string">'somewhere'</span>&gt;<span class="xml"><span class="tag">&lt;<span class="title">span</span>&gt;</span>GO<span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;/<span class="title">myComponent</span>&gt;</span></span><br><span class="line">//JSX transformed</span><br><span class="line">myComponent(&#123;link:'somewhere'&#125;, span(null,'GO'));</span></span><br></pre></td></tr></table></figure>
+<p>Substantial difference between React and Angular here is that React is Javascript friendly - you just put stuff as props and since components are functions these are passed as function arguments.</p>
+<p>Component is a function!</p>
+<p><strong>service vs function</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Angular</span></span><br><span class="line">myApp.service(<span class="string">'unicornLauncher'</span>, [<span class="string">"apiToken"</span>, UnicornLauncher]);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UnicornLauncher</span>(<span class="params">apiToken</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.launchedCount = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">this</span>.launch = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// make a request to the remote api and include the apiToken</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">this</span>.launchedCount++;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Javascript</span></span><br><span class="line"><span class="keyword">var</span> apiToken = <span class="built_in">require</span>(<span class="string">'../apiToken.js'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> <span class="title">UnicornLauncher</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.launchedCount = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">this</span>.launch = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// make a request to the remote api and include the apiToken</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">this</span>.launchedCount++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Service/provider in Angular is a solution for a made up problem. Just use CommonJs and you won’t need service/provider thing. You will just use modules and functions that are natural for JS.</p>
+<p>Service is a function!</p>
+<p><strong>filter vs function</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Angular</span></span><br><span class="line">App.filter(<span class="string">'incr'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> input + <span class="number">1</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;div&gt;&#123; &#123;value | incr&#125; &#125;&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//React</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">incr</span>(<span class="params">input</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> input + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;incr(value)&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Well, directive is pretty useful if you use html templates as strings. Life is easier with React when you do not use strings for templates.</p>
+<p>Filter is a function!</p>
+<p><strong>template vs JSX</strong><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//Angular</span><br><span class="line"><span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">ProfilePic</span> <span class="attribute">username</span>=<span class="value">'username'</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">ProfileLink</span> <span class="attribute">username</span>=<span class="value">'username'</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Reactjs</span></span><br><span class="line"><span class="comment">/** @jsx React.DOM */</span></span><br><span class="line"><span class="keyword">var</span> Avatar = React.createClass(&#123;</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="xml"><span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">ProfilePic</span> <span class="attribute">username</span>=<span class="value">&#123;this.props.username&#125;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">ProfileLink</span> <span class="attribute">username</span>=<span class="value">&#123;this.props.username&#125;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    )</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//transformed</span></span><br><span class="line"><span class="keyword">var</span> Avatar = React.createClass(&#123;</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      div(<span class="literal">null</span>,</span><br><span class="line">        ProfilePic(&#123;username:<span class="keyword">this</span>.props.username&#125;),</span><br><span class="line">        ProfileLink(&#123;username:<span class="keyword">this</span>.props.username&#125;)</span><br><span class="line">      )</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Functions are better than strings. Functions could work with closures. Functions are faster. And in javascript functions are first class citizens. Functions are much more logical than strings.</p>
+<p>Template is a function!</p>
+<p>With react you can live in function world. And with Angular you live in enterprize patterns world.</p>
+<p>My next story will be about why Angular might work for you.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2014/04/managers-are-taking-your-projects-breath/">managers are taking your project&#39;s breath</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2014-04-22T17:36:36.000Z">Apr 22 2014</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>Theoretically there is no manager in agile. If someone is telling you that they have agile team with a manager they are lying. That mostly mean that they are not ready for some reason to share responsibility across the team - they do not have agile.</p>
+<p>Few years ago I was lucky to participate in <a href="https://twitter.com/jeffpatton" target="_blank" rel="external">@jeffpatton</a> agile workshop. This had huge impact on my understanding of application development. Right now I had embraced some agile basic principles and consider them as healthier for internal group dynamics of a team. Agile is literally makes healthier and happier each individual in the team.</p>
+<p>People are lazy. Developers are not exclusions. We do not like to work and take responsibility. We easily give out our responsibilities for anyone who will take em. And worst thing you can do is to give all responsibility of project’s success to one person. That what is happening when you put manager in your team.</p>
+<p>On other hand people tend to step up and take responsibilities on products they are building and when they do they become more engaged and proud by stuff they do. They stop asking stupid questions and start committing themselves to the product.</p>
+<p>We are developers and we are coming to our jobs and spend eight hours in a day to do magic. We really want to build something that makes sense, that could make world better. Isn’t that the best motivation for us? Business, please, spend time to share your passion about product with us!</p>
+<p>PS: There is only one case when having a project manager is a good idea. When you have short time project and manager who takes BA role. It just do not make sense to commit in building a team.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2014/04/angularjs-is-evil-the-scope-horror/">Angularjs is evil: the scope horror</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2014-04-21T16:04:27.000Z">Apr 21 2014</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>This is the second post about how angular makes my life painful.</p>
+<ul>
+<li><a href="/2014/02/angularjs-is-evil-dependency--injection/">Angularjs is evil: dependency injection</a></li>
+<li><a href="/2014/04/angularjs-is-evil-the-scope-horror/">Angularjs is evil: the scope horror</a></li>
+<li><a href="/2014/04/angular-is-evil-overengineering/">Angularjs is evil: overengineering hell</a></li>
+</ul>
+<p>The scope is most one of most complex concepts in Angular. You never know what scope are you in and what is available inside. Things may change if you add anguments somewhere at the top node.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'myApp'</span>, []);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">$scope</span>) </span>&#123;</span><br><span class="line">    $scope.value = <span class="string">"foo"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params">$scope</span>) </span>&#123;</span><br><span class="line">    $scope.value = <span class="string">"bar"</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"foo"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"bar"</span>&gt;</span></span><br><span class="line">    &#123;value&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>You can miss new <code>ng-controller</code> or someone could overwrite your context. It looks like ok, until you have really complex html.</p>
+<p>Things become more infernal when you try to create a directive. Directive may have or may not have the scope. Obviously you are passing the stuff to the scope through arguments of the newly created “element”. You can do it in three different ways with craziest API I ever seen - you got three magic symbols <code>&amp; = @</code> and they do different things with stuff you are throwing inside your arguments. I can only tell that it looks reasonable untill you find <a href="http://facebook.github.io/react/" target="_blank" rel="external">alternative</a> that do same thing and make sense in the same time.</p>
+<p>And then you try to do what every angular developer does at least once in his life. You take transclusion and try to put directive scope inside transcluded html. Which looks like a great idea at the beginning.</p>
+<p>The other thing that I hate about <code>$scope</code> is that I never know when the template will be rendered. It is quite painful to see the magic without knowing what’s happening. I know that I can learn it, my point though is that if I need to learn to embrace it is probably done in a wrong way.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2014/02/angularjs-is-evil-dependency-injection/">Angularjs is evil: dependency injection</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2014-02-17T18:11:02.000Z">Feb 17 2014</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>A year ago I was excited of angular and I still think angular is a game changer. I see how community charmed with angular and how easy to start building webapps apps with it. However after a year of using angular I must say that I am not recommending investing time into this framework. I will write several posts about why.</p>
+<ul>
+<li><a href="/2014/02/angularjs-is-evil-dependency--injection/">Angularjs is evil: dependency injection</a></li>
+<li><a href="/2014/04/angularjs-is-evil-the-scope-horror/">Angularjs is evil: the scope horror</a></li>
+<li><a href="/2014/04/angular-is-evil-overengineering/">Angularjs is evil: overengineering hell</a></li>
+</ul>
+<p>One of things I hate most about angular is its module system. Sadly it is deeply injected in its DNA. Someone decided that DI in JavaScript should look like this:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">someFactory</span>(<span class="params">stuff</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//use stuff</span></span><br><span class="line">&#125;</span><br><span class="line">someFactory.$inject = [<span class="string">'stuff'</span>];</span><br><span class="line"></span><br><span class="line">app.factory([<span class="string">'stuff'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">stuff</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//use stuff</span></span><br><span class="line">&#125;])</span><br></pre></td></tr></table></figure>
+<p>It looks cool. But for me as a JS developer it’s too messy and complex (someFactory-&gt;someFactoryProvider o_O WTF?!) Here is a dependency injection in pure JS:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">someFactory</span>(<span class="params">stuff</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="comment">//we're using closure for DI here</span></span><br><span class="line">    	<span class="comment">//use stuff</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">someFactory(stuff) <span class="comment">// injecting stuff</span></span><br></pre></td></tr></table></figure></p>
+<p>I am using simple closure for dependency injection. It feels more natural.<br>But we still can’t replace angular’s module system right? Thus we need to use CommonJS (you can use <a href="http://browserify.org/" target="_blank" rel="external">browserify</a> or <a href="http://brunch.io/" target="_blank" rel="external">brunch</a>).<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stuff = <span class="built_in">require</span>(<span class="string">'./stuff'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> <span class="title">someFactory</span>(<span class="params"></span>)</span>&#123; <span class="comment">//and again we use closure</span></span><br><span class="line">	<span class="comment">//use stuff</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Why is that better? It is simple. It is better way for structuring your app - it gives you references and you can directly say where the dependency lives. It already works well for <strong>nodejs</strong>. It is compatible with existing package managers.</p>
+<p>I know that how JS modules should look like is a debatable topic. I think that CommonJS pattern quite usable and much better fit for JS than AMD or ES6 modules. Though I definitely think that Angular got it wrong.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+
+</div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Eldar Djafarov
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<a href="http://stfalcon.github.io/euromaidan/" class="em-ribbon" style="position: absolute; left:0; top:0; width: 90px; height: 90px; background: url('http://stfalcon.github.io/euromaidan/img/em-ribbon.png'); z-index: 2013; border: 0;" title="Розмісти стрічку з символікою України і ЄС на своєму сайті!" target="_blank"></a>
+</body>
+</html>

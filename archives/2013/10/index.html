@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives: 2013/10 | @edjafarov</title>
+  <meta name="author" content="Eldar Djafarov">
+  
+  <meta name="description" content="edjafarov blog, javascript, nodejs, compy, component">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="@edjafarov"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="@edjafarov" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css?v=1" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-317979-12', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">@edjafarov</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+<div class="alignleft" style="margin-top: 15px">
+
+
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="wrapper">
+<h2 class="archive-title">2013/10</h2>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2013/10/using-private-components-in-compy/">using private components in compy</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2013-10-21T14:09:02.000Z">Oct 21 2013</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>There are core limitations in component that makes hard to use private git repositories directly, unless you use github. Component FAQ <a href="https://github.com/component/component/wiki/F.A.Q#how-do-i-use-private-github-repositories" target="_blank" rel="external">proposes</a> to use <code>remotes</code> property and any web server that uses the same urls as Github.</p>
+<p><em>package.json</em><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  "compy":&#123;</span><br><span class="line">    ...</span><br><span class="line">    "remotes":["https://user:pass@raw.github.com"]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>But there is a better way to manage private components with any git server you like.</p>
+<h3 id="using_git_submodules_to_manage_private_components">using git submodules to manage private components</h3><p>Component supports <code>local</code> dependencies. That means it can serve components from any local folder you put in as local param in config.</p>
+<p><em>package.json</em><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  "compy":&#123;</span><br><span class="line">    ...</span><br><span class="line">    "paths":["local"],</span><br><span class="line">    "local":["component1","component2"]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>So if you want to use local dependencies, you should put git <a href="http://git-scm.com/book/en/Git-Tools-Submodules" target="_blank" rel="external">submodules</a> with those private components in the folder.</p>
+<p><a href="https://github.com/edjafarov/compy" target="_blank" rel="external">Compy</a> will serve them as usual components and you will manage them with git-cli.</p>
+<h3 id="adding_component_to_folder">adding component to folder</h3><p>You can add component to <code>local</code> folder like this:<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> local;</span><br><span class="line">submodule <span class="built_in">add</span> gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/chneukirchen/rack.git</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title"><a href="/2013/10/socker-websocket-crud-over-engineio/">socker: websocket CRUD over engine.io</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2013-10-15T01:10:06.000Z">Oct 15 2013</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>One of substantial difference of using sockets instead of plain http requests is that we usually broadcast messages without expecting any response. While building <a href="http://github.com/openconf/jschat" target="_blank" rel="external">jschat</a> I thought it would be ehough. Though even for a chat we need the response if we want reliability and better experience. Think of “Pending” state of a message when sending it in offline mode.</p>
+<p>Raw libraries doesn’t provide any ‘response’ like functionality thus I had to build my own implementation. As a base for jschat we are using <a href="https://github.com/LearnBoost/engine.io" target="_blank" rel="external">engine.io</a> because <a href="https://github.com/learnboost/socket.io" target="_blank" rel="external">socket.io</a> is not supported for a long time and engine.io is kind of it’s successor and it’s awesome.</p>
+<h2 id="socker">socker</h2><p><a href="https://github.com/edjafarov/socker" target="_blank" rel="external">Socker</a> is inspired by <a href="https://github.com/visionmedia/express" target="_blank" rel="external">express</a>. Simple and lightweight implementation of middlewares, routing and error handling. Socker wrapping both engine.io and engine.io-client and providing additional methods that implement express like API.</p>
+<h3 id="setting_up_socker">setting up socker</h3><p>We can use engine.io and socker with or without express<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//backend</span></span><br><span class="line"><span class="keyword">var</span> engine = <span class="built_in">require</span>(<span class="string">'engine.io'</span>);</span><br><span class="line"><span class="keyword">var</span> socker = <span class="built_in">require</span>(<span class="string">'socker'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = <span class="built_in">require</span>(<span class="string">'express'</span>)();</span><br><span class="line"><span class="keyword">var</span> server = http.createServer(app);</span><br><span class="line">server.listen(nconf.get(<span class="string">'server:port'</span>));</span><br><span class="line">server = engine.attach(server);</span><br><span class="line"></span><br><span class="line">socker(server); <span class="comment">// wrapping server with additional methods</span></span><br><span class="line">server.on(<span class="string">'connection'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">socket</span>)</span>&#123;</span><br><span class="line">  socker.attach(socket);<span class="comment">// we are attaching socker to the socket</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// frontend</span></span><br><span class="line"><span class="keyword">var</span> socket = <span class="built_in">require</span>(<span class="string">'engine.io'</span>)(<span class="string">'ws://localhost'</span>);</span><br><span class="line"><span class="keyword">var</span> sockerClient = <span class="built_in">require</span>(<span class="string">'socker-client'</span>); <span class="comment">// we can use it as standalone though</span></span><br><span class="line">sockerClient(socket);</span><br></pre></td></tr></table></figure>
+<h3 id="sending_the_message_from_client">sending the message from client</h3><p>On the client we have additional <code>serve</code> method on the socket<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//socket.serve(&lt;optional&gt; route, &lt;optional&gt; message, &lt;required&gt; callback);</span></span><br><span class="line"></span><br><span class="line">socket.serve(&#123;message:<span class="string">"Hello world!"</span>&#125;, <span class="function"><span class="keyword">function</span><span class="params">(err, data)</span></span>&#123;</span><br><span class="line">  <span class="comment">// err contains error object if it was thrown</span></span><br><span class="line">  <span class="comment">// data is a response data</span></span><br><span class="line">&#125;)</span><br><span class="line">socket.serve(<span class="string">'READ /api/item/343'</span>, <span class="function"><span class="keyword">function</span><span class="params">(err, data)</span></span>&#123;</span><br><span class="line">  <span class="comment">// err contains error object if it was thrown</span></span><br><span class="line">  <span class="comment">// data is a response data</span></span><br><span class="line">&#125;)</span><br><span class="line">socket.serve(<span class="string">'CREATE /api/items'</span>, &#123;itemName : <span class="string">"foo"</span>&#125; <span class="function"><span class="keyword">function</span><span class="params">(err, data)</span></span>&#123;</span><br><span class="line">  <span class="comment">// err contains error object if it was thrown</span></span><br><span class="line">  <span class="comment">// data is a response data</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="handling_the_message_on_server">handling the message on server</h3><p>On the server we additionally have sock.use and sock.when methods. <code>sock.use</code> adds middleware handler. Middleware in our case instead of request and response gives socket and data objects.<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">server.sock.<span class="keyword">use</span><span class="params">(logger)</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logger</span><span class="params">(socket, data, next)</span>&#123;</span></span><br><span class="line">  <span class="comment">// socket is a socket object</span></span><br><span class="line">  <span class="comment">// data - the data object sent with `request`</span></span><br><span class="line">  console.<span class="built_in">log</span><span class="params">(data)</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// socket object have .json method to send a response</span></span><br><span class="line">  <span class="keyword">if</span><span class="params">(weNeedTo)</span> return socket.json<span class="params">(&#123;responseMessage: <span class="string">"bar"</span>&#125;)</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// or we can throw an error</span></span><br><span class="line">  <span class="keyword">if</span><span class="params">(weNeedToThrowError)</span> return next<span class="params">(<span class="string">"Error message"</span>)</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// if we need to pass to next handler</span></span><br><span class="line">  next<span class="params">()</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>socket</code> is a message context object. And you can pollute it whenever you like. The “session” context object is <code>socket.__proto__</code> so If you want to save some data for connection lifetime use prototype object.</p>
+<h3 id="handling_routing">handling routing</h3><p>Inside routing middlewares the route is already parsed and we have also socket.params object with all params from the route.<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server.sock.when('CREATE /api/items', checkItem, createItem);</span><br><span class="line">server.sock.when('READ /api/item/:id', getItem);</span><br><span class="line">function getItem(socket, data, next)&#123;</span><br><span class="line">  // socket.params<span class="comment">['id']</span> contains id from the route</span><br><span class="line">  // data <span class="keyword">is</span> a data sent</span><br><span class="line">  socket.json(&#123;<span class="keyword">room</span>:<span class="string">"name"</span>, id: 343&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Using the mask <code>METHOD uri</code> is not required for socker. In the same manner you can name your routes.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.sock.when(<span class="string">'Server, please, give me room with :id'</span>, callback);</span><br><span class="line"><span class="comment">//or</span></span><br><span class="line">server.sock.when(<span class="string">'Bloody server! I command you to stay on your knees and give all items you got.'</span>, callback);</span><br></pre></td></tr></table></figure></p>
+<h3 id="error_handling">error handling</h3><p>We can also customize error handling.<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">server</span><span class="class">.sock</span><span class="class">.use</span>(<span class="function">function</span>(err, socket, data, next)&#123;</span><br><span class="line">  <span class="tag">if</span>(err)&#123;</span><br><span class="line">    <span class="tag">socket</span><span class="class">.json</span>(&#123;<span class="attribute">type</span>:<span class="string">"ERROR"</span>, <span class="attribute">err</span>:err, <span class="attribute">code</span>: <span class="number">500</span>&#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>It is important to put <code>type : &quot;ERROR&quot;</code> because that is the way client will treat the message as error.</p>
+<h3 id="try_it">try it</h3><p>You got clean and simple API and you got some latency boost. You save roundtrip to your session storage and handshake time. And now with <a href="https://github.com/edjafarov/socker" target="_blank" rel="external">socker</a> moving from express REST API to socket based API is really simple.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+
+</div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Eldar Djafarov
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<a href="http://stfalcon.github.io/euromaidan/" class="em-ribbon" style="position: absolute; left:0; top:0; width: 90px; height: 90px; background: url('http://stfalcon.github.io/euromaidan/img/em-ribbon.png'); z-index: 2013; border: 0;" title="Розмісти стрічку з символікою України і ЄС на своєму сайті!" target="_blank"></a>
+</body>
+</html>
