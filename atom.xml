@@ -5,7 +5,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://eldar.djafarov.com//"/>
-  <updated>2015-07-05T08:28:28.000Z</updated>
+  <updated>2015-07-05T19:50:18.000Z</updated>
   <id>http://eldar.djafarov.com//</id>
   
   <author>
@@ -20,13 +20,14 @@
     <link href="http://eldar.djafarov.com/2015/06/PromisePipe-debugging/"/>
     <id>http://eldar.djafarov.com/2015/06/PromisePipe-debugging/</id>
     <published>2015-06-30T17:04:14.000Z</published>
-    <updated>2015-07-05T08:28:28.000Z</updated>
+    <updated>2015-07-05T19:50:18.000Z</updated>
     <content type="html"><![CDATA[<p>While Promises look nice there is one thing I always hated about them. They are awful for debugging and they fail silently if you have a typo in your code. You need to catch the error otherwise you will never know what happened. So in PromisePipes I decided to fix that.</p>
 <p>So PromisePipe in debug mode shows unhandled exceptions in console:<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Failed inside test</span><br><span class="line"><span class="string">ReferenceError:</span> ff is not defined</span><br><span class="line">Object.test@<span class="regexp">/Users/</span>edjafarov<span class="regexp">/work/</span>PromisePipe<span class="regexp">/tests/</span>PromisePipe.error.spec.<span class="string">js:</span><span class="number">28</span>:<span class="number">16</span></span><br><span class="line">newArgFunc@<span class="regexp">/Users/</span>edjafarov<span class="regexp">/work/</span>PromisePipe<span class="regexp">/src/</span>PromisePipe.<span class="string">js:</span><span class="number">534</span>:<span class="number">26</span></span><br><span class="line">&#123;anonymous&#125;() ($)$$internal$$tryCatch@<span class="regexp">/Users/</span>edjafarov<span class="regexp">/work/</span>PromisePipe<span class="regexp">/node_modules/</span>es6-promise<span class="regexp">/dist/</span>es6-promise.<span class="string">js:</span><span class="number">304</span>:<span class="number">16</span></span><br><span class="line">&#123;anonymous&#125;() ($)$$internal$$invokeCallback@<span class="regexp">/Users/</span>edjafarov<span class="regexp">/work/</span>PromisePipe<span class="regexp">/node_modules/</span>es6-promise<span class="regexp">/dist/</span>es6-promise.<span class="string">js:</span><span class="number">316</span>:<span class="number">17</span></span><br><span class="line">&#123;anonymous&#125;()@<span class="regexp">/Users/</span>edjafarov<span class="regexp">/work/</span>PromisePipe<span class="regexp">/node_modules/</span>es6-promise<span class="regexp">/dist/</span>es6-promise.<span class="string">js:</span><span class="number">874</span>:<span class="number">13</span></span><br><span class="line">&#123;anonymous&#125;() ($)$asap$$flush@<span class="regexp">/Users/</span>edjafarov<span class="regexp">/work/</span>PromisePipe<span class="regexp">/node_modules/</span>es6-promise<span class="regexp">/dist/</span>es6-promise.<span class="string">js:</span><span class="number">111</span>:<span class="number">9</span></span><br><span class="line">process._tickCallback<span class="annotation">@node</span>.<span class="string">js:</span><span class="number">442</span>:<span class="number">13</span></span><br></pre></td></tr></table></figure></p>
 <p>It notifies you that things go wrong though it is not that useful for real life debugging.</p>
 <p>What is really helping is that PromisePipe wraps each chain function into the wrapper that is recording data/context values that chain is called with. You can track how the data is transformed by each chain. And it works out of the box. Just setup debug mode for PromisePipe like this:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PromisePipe.setMode(<span class="string">"DEBUG"</span>)</span><br></pre></td></tr></table></figure>
 <p>In chrome it looks like this:</p>
+<p><img src="../images/promisepipe-debug.gif" alt=""></p>
 <h2 id="Whats_next">Whats next</h2><ul>
 <li><p>We have the decomposition of all calls of the PromisePipe and transformations during the execution. That allows us to record the log of what happened while reproducing the bug by QA and replay the log later by Developer.</p>
 </li>

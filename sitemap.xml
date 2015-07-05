@@ -2,18 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://eldar.djafarov.com/2015/06/PromisePipe-debugging/</loc>
+    <lastmod>2015-07-05T19:50:18.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://eldar.djafarov.com/about/index.html</loc>
     <lastmod>2015-07-05T08:36:30.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://eldar.djafarov.com/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/</loc>
-    <lastmod>2015-07-05T08:28:28.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://eldar.djafarov.com/2013/10/using-private-components-in-compy/</loc>
-    <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   
   <url>
@@ -47,12 +42,12 @@
   </url>
   
   <url>
-    <loc>http://eldar.djafarov.com/2013/09/why-building-another-app-compiller/</loc>
+    <loc>http://eldar.djafarov.com/2014/04/managers-are-taking-your-projects-breath/</loc>
     <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://eldar.djafarov.com/2014/05/framework-vs-microlib-architecture/</loc>
+    <loc>http://eldar.djafarov.com/2013/10/using-private-components-in-compy/</loc>
     <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   
@@ -82,12 +77,17 @@
   </url>
   
   <url>
-    <loc>http://eldar.djafarov.com/2015/06/PromisePipe-debugging/</loc>
+    <loc>http://eldar.djafarov.com/2013/09/why-building-another-app-compiller/</loc>
     <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://eldar.djafarov.com/2014/04/managers-are-taking-your-projects-breath/</loc>
+    <loc>http://eldar.djafarov.com/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/</loc>
+    <lastmod>2015-07-05T08:28:28.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://eldar.djafarov.com/2014/05/framework-vs-microlib-architecture/</loc>
     <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   

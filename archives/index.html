@@ -100,6 +100,7 @@
 <p>What is really helping is that PromisePipe wraps each chain function into the wrapper that is recording data/context values that chain is called with. You can track how the data is transformed by each chain. And it works out of the box. Just setup debug mode for PromisePipe like this:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PromisePipe.setMode(<span class="string">"DEBUG"</span>)</span><br></pre></td></tr></table></figure>
 <p>In chrome it looks like this:</p>
+<p><img src="../images/promisepipe-debug.gif" alt=""></p>
 <h2 id="Whats_next">Whats next</h2><ul>
 <li><p>We have the decomposition of all calls of the PromisePipe and transformations during the execution. That allows us to record the log of what happened while reproducing the bug by QA and replay the log later by Developer.</p>
 </li>
@@ -835,7 +836,5 @@
 })(jQuery);
 </script>
 
-
-<a href="http://stfalcon.github.io/euromaidan/" class="em-ribbon" style="position: absolute; left:0; top:0; width: 90px; height: 90px; background: url('http://stfalcon.github.io/euromaidan/img/em-ribbon.png'); z-index: 2013; border: 0;" title="Розмісти стрічку з символікою України і ЄС на своєму сайті!" target="_blank"></a>
 </body>
 </html>
