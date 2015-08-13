@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://eldar.djafarov.com/2015/08/PromisePipe-basics/</loc>
+    <lastmod>2015-08-13T14:32:07.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://eldar.djafarov.com/2015/07/PromisePipe-debugging/</loc>
     <lastmod>2015-07-06T10:39:39.000Z</lastmod>
   </url>
@@ -9,11 +14,6 @@
   <url>
     <loc>http://eldar.djafarov.com/about/index.html</loc>
     <lastmod>2015-07-05T08:36:30.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://eldar.djafarov.com/2015/01/the-holy-grail-promise-pipes/</loc>
-    <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   
   <url>
@@ -83,6 +83,11 @@
   
   <url>
     <loc>http://eldar.djafarov.com/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/</loc>
+    <lastmod>2015-07-05T08:28:28.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://eldar.djafarov.com/2015/01/the-holy-grail-promise-pipes/</loc>
     <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   

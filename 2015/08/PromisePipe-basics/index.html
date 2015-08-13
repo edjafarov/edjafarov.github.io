@@ -1,0 +1,204 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>PromisePipe: basics | @edjafarov</title>
+  <meta name="author" content="Eldar Djafarov">
+  
+  <meta name="description" content="edjafarov blog, javascript, nodejs, compy, component">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="PromisePipe: basics"/>
+  <meta property="og:site_name" content="@edjafarov"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="@edjafarov" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css?v=1" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-317979-12', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">@edjafarov</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+<div class="alignleft" style="margin-top: 15px">
+
+
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">PromisePipe: basics</h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2015-08-13T17:39:17.000Z">Aug 13 2015</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>I really like building business logic as a chain. And I like the idea of building logic out of reusable functions that does simple transformations. All logic can be described as a chain of data transformations. Even the <a href="http://expressjs.com/" target="_blank" rel="external">express</a> backend and all middleware chain is a chained logic that transforms the request into response.</p>
+<p><a href="https://github.com/edjafarov/PromisePipe" target="_blank" rel="external">PromisePipe</a> is a constructor of reusable Promise chains. Additionally it allows to customize it’s API, gives better debugging and allows to make cross process logic chains.</p>
+<p>You can install PromisePipe from npm:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> promise-pipe</span><br></pre></td></tr></table></figure>
+<p>In you javascript file you would start</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> PromisePipe = <span class="built_in">require</span>(<span class="string">"promise-pipe"</span>)();</span><br><span class="line"><span class="keyword">var</span> action = PromisePipe().then(addOne);</span><br><span class="line"></span><br><span class="line">action(<span class="number">10</span>).then(actionDone); <span class="comment">//11</span></span><br><span class="line">action(<span class="number">20</span>).then(actionDone); <span class="comment">//21</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">actionDone</span>(<span class="params">result</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(result)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addOne</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> data + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>the <code>action</code> is a constructor for the logic and is a function that returns a Promise. You can add chains modifying it’s logic.</p>
+<p>Let’s create an action that would reverse the Array. Reverse chain would look same as if we are using native Promises:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverse</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(data)) <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Data is not an Array'</span>));</span><br><span class="line">  <span class="keyword">return</span> data.reverse();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//or if async</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverse</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(data)) <span class="keyword">return</span> reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Data is not an Array'</span>));</span><br><span class="line">    resolve(data.reverse());</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The <code>action</code> will be modified like:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> action = PromisePipe().then(reverse).catch(handleError);</span><br><span class="line"></span><br><span class="line">action([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]).then(actionDone);</span><br><span class="line"><span class="comment">//under the hood same as Promise.resolve([1,2,3]).then(reverse).catch(handleError).then(actionDone)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleError</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.error(<span class="string">"Error: "</span> + err);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(err)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Where <code>handleError</code> will catch the error if argument would not be an Array.</p>
+<p>PromisePipe have small API but you can extend it with your custom methods.</p>
+<p>For example we can extend PromisePipe API with reverse function like this.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PromisePipe.use(<span class="string">'reverse'</span>, <span class="function"><span class="keyword">function</span> <span class="title">reverse</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(data)) <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Data is not an Array'</span>));</span><br><span class="line">  <span class="keyword">return</span> data.reverse();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>The action will look like</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> action = PromisePipe().reverse().catch(handleError);</span><br></pre></td></tr></table></figure>
+<p>PromisePipe extension function have first two arguments <code>(data, context)</code> as any chain function. All other arguments can be used in API method.<br>For example similar to reactive streams <code>.map</code> method that will accept <code>mapFunction</code> as argument:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PromisePipe.use(<span class="string">'map'</span>, <span class="function"><span class="keyword">function</span> <span class="title">map</span>(<span class="params">data, context, mapFunction</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(data)) data = [data];</span><br><span class="line">  <span class="keyword">return</span> data.map(mapFunction)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>Our action<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> action = PromisePipe()</span><br><span class="line">  .map(item =&gt; item + <span class="number">1</span>)</span><br><span class="line">  .reverse()</span><br><span class="line">  .catch(handleError);</span><br></pre></td></tr></table></figure></p>
+<p>And the example will look like:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> PromisePipe = <span class="built_in">require</span>(<span class="string">"promise-pipe"</span>)();</span><br><span class="line"></span><br><span class="line">PromisePipe.use(<span class="string">'reverse'</span>, <span class="function"><span class="keyword">function</span> <span class="title">reverse</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(data)) <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Data is not an Array'</span>));</span><br><span class="line">  <span class="keyword">return</span> data.reverse();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">PromisePipe.use(<span class="string">'map'</span>, <span class="function"><span class="keyword">function</span> <span class="title">map</span>(<span class="params">data, context, mapFunction</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(data)) data = [data];</span><br><span class="line">  <span class="keyword">return</span> data.map(mapFunction)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> action = PromisePipe()</span><br><span class="line">  .map(item =&gt; item + <span class="number">1</span>)</span><br><span class="line">  .reverse()</span><br><span class="line">  .catch(handleError);</span><br><span class="line"></span><br><span class="line">action([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]).then(actionDone);</span><br><span class="line"></span><br><span class="line">action([<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]).then(actionDone);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">actionDone</span>(<span class="params">result</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(result)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleError</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.error(<span class="string">"Error: "</span> + err);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(err)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>And you can play around with whis PromisePipe example <a href="http://requirebin.com/?gist=51886d9c0cc4f41a6a9c" target="_blank" rel="external">online</a>;</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      Latest:
+      <ul class="list-unstyled">
+      
+         <li>
+              <a href="/2015/08/PromisePipe-basics/">PromisePipe: basics</a>
+            </li>
+          
+         <li>
+              <a href="/2015/07/PromisePipe-debugging/">PromisePipe: debugging</a>
+            </li>
+          
+         <li>
+              <a href="/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/">PromisePipe: cross process homogenous Promise chains</a>
+            </li>
+          
+         <li>
+              <a href="/2015/06/Responsibility-is-the-best-Motivation/">Responsibility is the best Motivation</a>
+            </li>
+          
+         <li>
+              <a href="/2015/01/the-holy-grail-promise-pipes/">The Holy Grail: promise pipes</a>
+            </li>
+          
+         <li>
+              <a href="/2014/09/proper-node-webkit-desktop-notifications/">proper node-webkit desktop notifications</a>
+            </li>
+          
+         <li>
+              <a href="/2014/07/semantic-styling/">semantic styling</a>
+            </li>
+          
+         <li>
+              <a href="/2014/06/node-webkit-autoupdate/">node-webkit autoupdate</a>
+            </li>
+          
+         <li>
+              <a href="/2014/05/framework-vs-microlib-architecture/">framework vs microlib architecture</a>
+            </li>
+          
+         <li>
+              <a href="/2014/04/angular-is-evil-overengineering/">Angularjs is evil: overengineering hell</a>
+            </li>
+          
+      </ul>
+      
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  <section id="comment">
+</section>
+</div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Eldar Djafarov
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
