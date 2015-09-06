@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Under the hood of PromisePipe | @edjafarov</title>
+  <meta name="author" content="Eldar Djafarov">
+  
+  <meta name="description" content="edjafarov blog, javascript, nodejs, compy, component">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Under the hood of PromisePipe"/>
+  <meta property="og:site_name" content="@edjafarov"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="@edjafarov" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css?v=1" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-317979-12', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</head>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">@edjafarov</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+<div class="alignleft" style="margin-top: 15px">
+
+
+</div>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
+    <h1 class="title">Under the hood of PromisePipe</h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2015-09-06T10:40:12.000Z">Sep 6 2015</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>There will be a lot of simplified pieces of code that shows how PromisePipe works.</p>
+<p>It all started with this piece of code from awesome article about Promises on html5rocks: <a href="http://www.html5rocks.com/en/tutorials/es6/promises/" target="_blank" rel="external">http://www.html5rocks.com/en/tutorials/es6/promises/</a><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Loop through our chapter urls</span></span><br><span class="line">story.chapterUrls.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">sequence, chapterUrl</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Add these actions to the end of the sequence</span></span><br><span class="line">  <span class="keyword">return</span> sequence.then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> getJSON(chapterUrl);</span><br><span class="line">  &#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">chapter</span>) </span>&#123;</span><br><span class="line">    addHtmlToPage(chapter.html);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;, <span class="built_in">Promise</span>.resolve());</span><br></pre></td></tr></table></figure></p>
+<p>This piece of code is taking an array of chapterUrls and chains the fetching JSON for each URL and adding the html to the page sequentially.</p>
+<p>What I like here is that you can take any array of functions and get a promise chain:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sequence = [fn1, fn2, fn3];</span><br><span class="line">sequence.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">sequence, fn, i</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> sequence.then(fn);</span><br><span class="line">&#125;, <span class="built_in">Promise</span>.resolve())</span><br></pre></td></tr></table></figure></p>
+<p>and it equeals to<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve().then(fn1).then(fn2).then(fn3)</span><br></pre></td></tr></table></figure></p>
+<p>We can build a constructor for such reusable chains. And we will have chains that look like and work like Promise chains but can be called multiple times.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">PromisePipe</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> sequence = [];</span><br><span class="line">  <span class="keyword">var</span> result = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> sequence.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">sequence, fn, i</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> sequence.then(fn);</span><br><span class="line">    &#125;, <span class="built_in">Promise</span>.resolve())</span><br><span class="line">  &#125;</span><br><span class="line">  result.then = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">    sequence.push(fn)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> action = PromisePipe().then(fn1).then(fn2).then(fn3);</span><br><span class="line">action(<span class="number">1</span>); <span class="comment">//call once</span></span><br><span class="line">action(<span class="number">10</span>); <span class="comment">//call twice same as</span></span><br><span class="line"><span class="comment">//Promise.resolve(10).then(fn1).then(fn2).then(fn3)</span></span><br></pre></td></tr></table></figure>
+<p>That also allows us to have more control over the execution of Promise chain. For example promise chain functions always have a single argument and we can add the second argument as a context shared through all the chains, just like request/response in nodejs middlewares.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> context = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fn1 = &#123;</span><br><span class="line">  id: getUniqueId()</span><br><span class="line">  func: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> fn1.call(<span class="keyword">this</span>, data, context);</span><br><span class="line">  &#125;,</span><br><span class="line">  env: env</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>I also added some meta information like environment where it should be executed and unique ID of a chain. And that is how PromisePipe can control the execution in a runtime.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">origSequence.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">sequence, fn, i</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> previousFn = origSequence[i - <span class="number">1</span>];</span><br><span class="line">  <span class="keyword">if</span>(fn.env !== previousFn.env) &#123;</span><br><span class="line">    <span class="keyword">return</span> PromisePipe.transition(previousFn.env, fn.env)</span><br><span class="line">    <span class="comment">//smth else send message previousFn.env to fn.env</span></span><br><span class="line">    <span class="comment">//and return a promise that will be resolved when transaction</span></span><br><span class="line">    <span class="comment">//will be back and resolved</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> sequence.then(fn.func);</span><br><span class="line">&#125;, <span class="built_in">Promise</span>.resolve());</span><br></pre></td></tr></table></figure>
+<p>When the execution comes to a chain that should be executed in different environment the PromisePipe is building a message with data, context, pipe id and chain id’s that should be executed on other environment.</p>
+<p>We need to deliver the message to other env and execute it in PromisePipe.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">PromisePipe.execTransitionMessage = <span class="function"><span class="keyword">function</span>(<span class="params">message</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> firstChainIndex = getIndexByChainId(message.firstChainId);</span><br><span class="line">  <span class="keyword">var</span> lastChainIndex = getIndexByChainId(message.lastChainId);</span><br><span class="line">  <span class="keyword">var</span> localChain = sequences[message.pipeId].slice(firstChainIndex, lastChainIndex);</span><br><span class="line">  <span class="keyword">return</span> localChain.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">sequence, fn, i</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> sequence.then(fn.func);</span><br><span class="line">  &#125;, <span class="built_in">Promise</span>.resolve());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//where message is something like</span></span><br><span class="line">PromisePipe.createTransitionMessage = <span class="function"><span class="keyword">function</span> <span class="title">createTransitionMessage</span>(<span class="params">data, context, pipeId, chainId, envBackChainId, callId</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    data: data,</span><br><span class="line">    context: context,</span><br><span class="line">    pipe: pipeId,</span><br><span class="line">    chains: [firstChainId, lastChainId]</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>After the message will be executed and resolved the message with updated data can be passed back to previous environment to resolve execution of original pipe.</p>
+<p>So basically we are running the same code on client and server but only pieces of code are actually running on each environment.<br><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">CLIENT</span></span><br><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="comment">0</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">1</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">2</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">3</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">4</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">5</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span></span><br><span class="line"><span class="comment">client</span><span class="literal">-</span>&gt;<span class="comment">client</span><span class="literal">-</span>&gt;      <span class="literal">-</span>&gt;      <span class="literal">-</span>&gt;      <span class="literal">-</span>&gt;<span class="comment">client</span></span><br><span class="line"></span><br><span class="line"><span class="comment">SERVER</span></span><br><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="comment">0</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">1</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">2</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">3</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">4</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">5</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span></span><br><span class="line">      <span class="literal">-</span>&gt;      <span class="literal">-</span>&gt;<span class="comment">server</span><span class="literal">-</span>&gt;<span class="comment">server</span><span class="literal">-</span>&gt;<span class="comment">server</span><span class="literal">-</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">RESULT</span></span><br><span class="line"><span class="literal">-</span><span class="literal">-</span><span class="comment">0</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">1</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">2</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">3</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">4</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">5</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span></span><br><span class="line"><span class="comment">client</span><span class="literal">-</span>&gt;<span class="comment">client</span><span class="literal">-</span>&gt;<span class="comment">server</span><span class="literal">-</span>&gt;<span class="comment">server</span><span class="literal">-</span>&gt;<span class="comment">server</span><span class="literal">-</span>&gt;<span class="comment">client</span></span><br></pre></td></tr></table></figure></p>
+<p>This is a general idea of how PromisePipe works. The pieces of code you see here are mostly a pseudo code, real code little bit more complicated and handles multiple features including error handling, security, api extending, better debuggability, etc…</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      Latest:
+      <ul class="list-unstyled">
+      
+         <li>
+              <a href="/2015/09/Under-the-hood-of-PromisePipe/">Under the hood of PromisePipe</a>
+            </li>
+          
+         <li>
+              <a href="/2015/08/PromisePipe-basics/">PromisePipe: basics</a>
+            </li>
+          
+         <li>
+              <a href="/2015/07/PromisePipe-debugging/">PromisePipe: debugging</a>
+            </li>
+          
+         <li>
+              <a href="/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/">PromisePipe: cross process homogenous Promise chains</a>
+            </li>
+          
+         <li>
+              <a href="/2015/06/Responsibility-is-the-best-Motivation/">Responsibility is the best Motivation</a>
+            </li>
+          
+         <li>
+              <a href="/2015/01/the-holy-grail-promise-pipes/">The Holy Grail: promise pipes</a>
+            </li>
+          
+         <li>
+              <a href="/2014/09/proper-node-webkit-desktop-notifications/">proper node-webkit desktop notifications</a>
+            </li>
+          
+         <li>
+              <a href="/2014/07/semantic-styling/">semantic styling</a>
+            </li>
+          
+         <li>
+              <a href="/2014/06/node-webkit-autoupdate/">node-webkit autoupdate</a>
+            </li>
+          
+         <li>
+              <a href="/2014/05/framework-vs-microlib-architecture/">framework vs microlib architecture</a>
+            </li>
+          
+      </ul>
+      
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  <section id="comment">
+</section>
+</div>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Eldar Djafarov
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

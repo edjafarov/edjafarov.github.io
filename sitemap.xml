@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://eldar.djafarov.com/2015/09/Under-the-hood-of-PromisePipe/</loc>
+    <lastmod>2015-09-06T07:13:41.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://eldar.djafarov.com/2015/08/PromisePipe-basics/</loc>
     <lastmod>2015-08-13T14:39:31.000Z</lastmod>
   </url>
@@ -14,11 +19,6 @@
   <url>
     <loc>http://eldar.djafarov.com/about/index.html</loc>
     <lastmod>2015-07-05T08:36:30.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://eldar.djafarov.com/2013/10/socker-websocket-crud-over-engineio/</loc>
-    <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   
   <url>
@@ -47,12 +47,12 @@
   </url>
   
   <url>
-    <loc>http://eldar.djafarov.com/2013/10/using-private-components-in-compy/</loc>
+    <loc>http://eldar.djafarov.com/2014/05/framework-vs-microlib-architecture/</loc>
     <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://eldar.djafarov.com/2013/08/compy-simple-way-of-building-webapps/</loc>
+    <loc>http://eldar.djafarov.com/2013/10/using-private-components-in-compy/</loc>
     <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   
@@ -72,17 +72,12 @@
   </url>
   
   <url>
-    <loc>http://eldar.djafarov.com/2015/06/Responsibility-is-the-best-Motivation/</loc>
-    <lastmod>2015-07-05T08:28:28.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://eldar.djafarov.com/2013/09/why-building-another-app-compiller/</loc>
     <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://eldar.djafarov.com/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/</loc>
+    <loc>http://eldar.djafarov.com/2015/06/Responsibility-is-the-best-Motivation/</loc>
     <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   
@@ -92,7 +87,17 @@
   </url>
   
   <url>
-    <loc>http://eldar.djafarov.com/2014/05/framework-vs-microlib-architecture/</loc>
+    <loc>http://eldar.djafarov.com/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/</loc>
+    <lastmod>2015-07-05T08:28:28.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://eldar.djafarov.com/2013/10/socker-websocket-crud-over-engineio/</loc>
+    <lastmod>2015-07-05T08:28:28.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://eldar.djafarov.com/2013/08/compy-simple-way-of-building-webapps/</loc>
     <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   
