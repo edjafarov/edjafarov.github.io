@@ -1,5 +1,5 @@
 title: "PromisePipe: debugging"
-date: 2015-06-30 20:04:14
+date: 2015-07-06 20:04:14
 tags:
 ---
 While Promises look nice there is one thing I always hated about them. They are awful for debugging and they fail silently if you have a typo in your code. You need to catch the error otherwise you will never know what happened. So in PromisePipes I decided to fix that.
@@ -26,7 +26,7 @@ PromisePipe.setMode("DEBUG")
 
 In chrome it looks like this:
 
-![](../images/promisepipe-debug.gif)
+![](/images/promisepipe-debug.gif)
 
 ##Whats next
 * We have the decomposition of all calls of the PromisePipe and transformations during the execution. That allows us to record the log of what happened while reproducing the bug by QA and replay the log later by Developer.
