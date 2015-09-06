@@ -121,7 +121,7 @@
     <link href="http://eldar.djafarov.com/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/"/>
     <id>http://eldar.djafarov.com/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/</id>
     <published>2015-06-17T11:42:39.000Z</published>
-    <updated>2015-07-05T08:28:28.000Z</updated>
+    <updated>2015-09-06T07:23:26.000Z</updated>
     <content type="html"><![CDATA[<p>I used to be a backend developer and even earlier I was a frontend developer. I guess I was good backend dev for my frontend colleagues at that time. Since I was thinking about API’s as a consumer of that API.</p>
 <p>I wasn’t ever that lucky as a frontend dev. Building API is hard. It usually takes a lot of time and wtf’s to get same vision on how communication with the server should work.  We start with REST API, then everyone has its own vision on what is REST. Each modification of API is a pain and it always take a lot of time and talks to make a change.</p>
 <p>Today as frontend developer I usually describe resource calls with Promises. I use promises because I find their chaining API really nice to describe the potentially asynchronous business logic.</p>
@@ -171,6 +171,7 @@
 </ul>
 <p><img src="/images/homogenous-code.png" alt="homogenous code"></p>
 <p>I believe PromisePipe will help us to push microservice architectures forward. The homogenous business logic allows decoupling of logic from process to process communication. Which makes no difference between code that is running in monolith and miscroservice architecture.</p>
+<p>If you want to know what is under the hood of PromisePipes: (Under the hood of PromisePipe)[<a href="http://eldar.djafarov.com/2015/09/Under-the-hood-of-PromisePipe/">http://eldar.djafarov.com/2015/09/Under-the-hood-of-PromisePipe/</a>]</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p>I used to be a backend developer and even earlier I was a frontend developer. I guess I was good backend dev for my frontend colleagues a]]>
