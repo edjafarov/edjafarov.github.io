@@ -83,6 +83,73 @@
     <header>
       
   
+    <h1 class="title"><a href="/2015/09/REST-API-is-dead-for-me/">REST API is dead for me</a></h1>
+  
+
+      
+        <p class="published">
+          Published: <time datetime="2015-09-18T16:23:52.000Z">Sep 18 2015</time>
+        </p>
+      
+    </header>
+    <div class="entry">
+      
+        <p>On the client, we have some data structure that we need to save in database, or process somehow, or else. In any case, it is a JSON, and It probably isn’t flat. What do we do?</p>
+<ol>
+<li>convert the data into the combination of HTTP method, API URL and body.</li>
+<li>make an HTTP request</li>
+<li>take the request on server side</li>
+<li>try to decode the combination of method, API URL and body into original data.</li>
+<li>do a business logic with the data.</li>
+</ol>
+<p>At step 1 we have an object and all steps up to step 4 all we are doing is moving this object to the server using this crazy long way.</p>
+<p>The question is <strong>WHY?</strong></p>
+<p>On a server side we have a set of middlewares:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/doStuffOnServer'</span>, middleware1, middleware2, middleware3)</span><br></pre></td></tr></table></figure>
+<p>Those middlewares are taking a data from Request object and transform this data into a response.</p>
+<p>But we can think of server as an asychronous function for client:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doStuffOnServer</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> middleware3(middleware2(middleware1(data)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>We actually shouldn’t care about what transport it use. It can be HTTP or Sockets it doesn’t matter. All your API calls should be just simple asynchronous functions and this functions should be generated automatically by your server framework, for <strong>different</strong> languages and technologies. Isn’t it easier to write auto generator <strong>once</strong> or implement REST API each time.</p>
+<p>I spent several years trying to understand the way good REST API should look like. Now REST API is dead for me. It just doesn’t make sense anymore.</p>
+
+      
+    </div>
+    <footer>
+        <div class="addthis addthis_toolbox addthis_default_style">
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="edjafarov">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  </div>
+
+      <br/>
+      
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+<!-- hackish -->
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+  
     <h1 class="title"><a href="/2015/09/Under-the-hood-of-PromisePipe/">Under the hood of PromisePipe</a></h1>
   
 

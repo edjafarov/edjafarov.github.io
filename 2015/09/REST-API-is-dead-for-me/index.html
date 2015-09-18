@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>why building another app compiler? | @edjafarov</title>
+  <title>REST API is dead for me | @edjafarov</title>
   <meta name="author" content="Eldar Djafarov">
   
   <meta name="description" content="edjafarov blog, javascript, nodejs, compy, component">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="why building another app compiler?"/>
+  <meta property="og:title" content="REST API is dead for me"/>
   <meta property="og:site_name" content="@edjafarov"/>
 
   
@@ -78,27 +78,33 @@
     <header>
       
   
-    <h1 class="title">why building another app compiler?</h1>
+    <h1 class="title">REST API is dead for me</h1>
   
 
       
         <p class="published">
-          Published: <time datetime="2013-09-28T12:10:19.000Z">Sep 28 2013</time>
+          Published: <time datetime="2015-09-18T16:23:52.000Z">Sep 18 2015</time>
         </p>
       
     </header>
     <div class="entry">
       
-        <p>When you are frontend developer and start doing node npm completely spoils you. Because unlike we used to it provides single and predictable way of adding/using 3rd party libs and snippets to your code.</p>
-<p>Frontend is more complex in many ways. It is more fragmented since there are html and css additionally to javascript and our code is running in different combinations of vm’s and platforms.</p>
-<p>Commonly used way of adding 3rd libs is a <code>/vendor</code> folder that holds bunch of unminified (if you’re lucky enough) files that were downloaded by someone ages ago. Maybe you will find comments inside that will give you an idea of what version of library is used, maybe not. Also what-load-first dependency management is completely your pain. You might have a master file with all the scripts loaded in ‘right’ order <img width="15" height="15" src="http://skypeblogs.files.wordpress.com/2011/07/0186-facepalm-30px.png?w=30&h=30">.</p>
-<p><a href="https://github.com/bower/bower" target="_blank" rel="external"><strong>Bower</strong></a> is doing great job adding more metadata to packages fixing some problemts. But <em>Bower is just a package manager (c)</em> and it doesnt load scripts. So again, you need to do additional job defining what-load-when relations.</p>
-<p>Even if you will use <a href="https://github.com/jrburke/requirejs" target="_blank" rel="external"><strong>require.js</strong></a> you need to configure 3rd libraries. Besides <strong>requirejs</strong> adds it’s own complexities into code. For example: do you know the difference between <code>require</code> and <code>define</code> functions? And frankly why do you need to know difference! You need something that just works.</p>
-<p>So at the end of a day we need package manager that will deliver libs into our app, require functionality that will handle script dependencies and builder that will wire all the thing together and give back 3 files: index.html, app.js and app.css</p>
-<h3 id="and_compy_can_do_it">and <a href="https://github.com/edjafarov/compy" target="_blank" rel="external">compy</a> can do it</h3><p><a href="https://github.com/component/component" target="_blank" rel="external"><strong>Componentjs</strong></a> does most of work already. <strong>Compy</strong> just wraps the concept in one solid solution.</p>
-<h4 id="component_package_manager"><strong>component package manager</strong></h4><p><strong>Componentjs</strong> was obvious choice. Unlike <strong>npm</strong> or <strong>bower</strong> component is really strict on what files considered a source. Which is not that important for server but really important for frontend.</p>
-<h4 id="local_require"><strong>local require</strong></h4><p><strong>Componentjs</strong> gives local require out of the box. Component’s require is synchronous. Your files are wrapped in scope and concatenated in one file. Your dependencies are already loaded then you require them. Thus you don’t break javascript and require becomes plain simple and clear.</p>
-<h4 id="builder"><strong>builder</strong></h4><p>Builder takes responsibility to compile out three files: app.js, app.css and index.html. app.js is built of js dependencies (components), precompiled templates and js source files. app.css is just concatenated css files and index.html generated automatically to eat js/css and run “main” file. Builder have bunch of plugins that allow to precompile sources. So you can use coffeescript, scss, jade, whatever. And just technically because we avoid on read/write cycle comparing to plain grunt it’s faster than grunt. And you can use mix of technologies require coffeescript from js and vice versa.</p>
+        <p>On the client, we have some data structure that we need to save in database, or process somehow, or else. In any case, it is a JSON, and It probably isn’t flat. What do we do?</p>
+<ol>
+<li>convert the data into the combination of HTTP method, API URL and body.</li>
+<li>make an HTTP request</li>
+<li>take the request on server side</li>
+<li>try to decode the combination of method, API URL and body into original data.</li>
+<li>do a business logic with the data.</li>
+</ol>
+<p>At step 1 we have an object and all steps up to step 4 all we are doing is moving this object to the server using this crazy long way.</p>
+<p>The question is <strong>WHY?</strong></p>
+<p>On a server side we have a set of middlewares:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/doStuffOnServer'</span>, middleware1, middleware2, middleware3)</span><br></pre></td></tr></table></figure>
+<p>Those middlewares are taking a data from Request object and transform this data into a response.</p>
+<p>But we can think of server as an asychronous function for client:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doStuffOnServer</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> middleware3(middleware2(middleware1(data)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>We actually shouldn’t care about what transport it use. It can be HTTP or Sockets it doesn’t matter. All your API calls should be just simple asynchronous functions and this functions should be generated automatically by your server framework, for <strong>different</strong> languages and technologies. Isn’t it easier to write auto generator <strong>once</strong> or implement REST API each time.</p>
+<p>I spent several years trying to understand the way good REST API should look like. Now REST API is dead for me. It just doesn’t make sense anymore.</p>
 
       
     </div>

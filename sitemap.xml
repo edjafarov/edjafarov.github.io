@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://eldar.djafarov.com/2015/09/REST-API-is-dead-for-me/</loc>
+    <lastmod>2015-09-18T16:24:19.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://eldar.djafarov.com/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/</loc>
     <lastmod>2015-09-06T07:25:10.000Z</lastmod>
   </url>
@@ -24,11 +29,6 @@
   <url>
     <loc>http://eldar.djafarov.com/about/index.html</loc>
     <lastmod>2015-07-05T08:36:30.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://eldar.djafarov.com/2013/11/reactjs-mixing-with-backbone/</loc>
-    <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   
   <url>
@@ -93,6 +93,11 @@
   
   <url>
     <loc>http://eldar.djafarov.com/2014/07/semantic-styling/</loc>
+    <lastmod>2015-07-05T08:28:28.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://eldar.djafarov.com/2013/11/reactjs-mixing-with-backbone/</loc>
     <lastmod>2015-07-05T08:28:28.000Z</lastmod>
   </url>
   
