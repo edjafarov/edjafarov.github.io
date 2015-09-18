@@ -139,3 +139,5 @@ With PromisePipes you get:
 ![homogenous code](/images/homogenous-code.png)
 
 I believe PromisePipe will help us to push microservice architectures forward. The homogenous business logic allows decoupling of logic from process to process communication. Which makes no difference between code that is running in monolith and miscroservice architecture.
+
+If you want to know what is under the hood of PromisePipes: [Under the hood of PromisePipe](http://eldar.djafarov.com/2015/09/Under-the-hood-of-PromisePipe/)

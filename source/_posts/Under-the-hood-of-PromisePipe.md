@@ -4,7 +4,7 @@ tags:
 ---
 There will be a lot of simplified pieces of code that shows how PromisePipe works.
 
-It all started with this piece of code from awesome article about Promises on html5rocks: http://www.html5rocks.com/en/tutorials/es6/promises/
+It all started with this piece of code from awesome article about Promises on html5rocks: [JavaScript Promises. There and back again](http://www.html5rocks.com/en/tutorials/es6/promises/)
 ```javascript
 // Loop through our chapter urls
 story.chapterUrls.reduce(function(sequence, chapterUrl) {
@@ -121,3 +121,8 @@ client->client->server->server->server->client
 ```
 This is a general idea of how PromisePipe works. The pieces of code you see here are mostly a pseudo code, real code little bit more complicated and handles multiple features including error handling, security, api extending, better debuggability, etc...
 
+If you want to know more about PromisePipes check:
+
+* [PromisePipe: cross process homogenous Promise chains](http://eldar.djafarov.com/2015/06/PromisePipe-cross-process-homogenous-Promise-chains/)
+* [PromisePipe: basics](http://eldar.djafarov.com/2015/08/PromisePipe-basics/)
+* [PromisePipe: debugging](http://eldar.djafarov.com/2015/07/PromisePipe-debugging/)
