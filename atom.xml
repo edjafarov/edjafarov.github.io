@@ -484,10 +484,10 @@
     <link href="http://eldar.djafarov.com/2014/04/angularjs-is-evil-the-scope-horror/"/>
     <id>http://eldar.djafarov.com/2014/04/angularjs-is-evil-the-scope-horror/</id>
     <published>2014-04-21T16:04:27.000Z</published>
-    <updated>2015-07-05T08:28:28.000Z</updated>
+    <updated>2015-09-29T09:38:46.000Z</updated>
     <content type="html"><![CDATA[<p>This is the second post about how angular makes my life painful.</p>
 <ul>
-<li><a href="/2014/02/angularjs-is-evil-dependency--injection/">Angularjs is evil: dependency injection</a></li>
+<li><a href="/2014/02/angularjs-is-evil-dependency-injection/">Angularjs is evil: dependency injection</a></li>
 <li><a href="/2014/04/angularjs-is-evil-the-scope-horror/">Angularjs is evil: the scope horror</a></li>
 <li><a href="/2014/04/angular-is-evil-overengineering/">Angularjs is evil: overengineering hell</a></li>
 </ul>
@@ -502,7 +502,7 @@
     <summary type="html">
     <![CDATA[<p>This is the second post about how angular makes my life painful.</p>
 <ul>
-<li><a href="/2014/02/angularjs-is-evil-dependency--injection/"]]>
+<li><a href="/2014/02/angularjs-is-evil-dependency-injection/">]]>
     </summary>
     
   </entry>
@@ -512,10 +512,10 @@
     <link href="http://eldar.djafarov.com/2014/02/angularjs-is-evil-dependency-injection/"/>
     <id>http://eldar.djafarov.com/2014/02/angularjs-is-evil-dependency-injection/</id>
     <published>2014-02-17T18:11:02.000Z</published>
-    <updated>2015-07-05T08:28:28.000Z</updated>
+    <updated>2015-09-29T09:38:44.000Z</updated>
     <content type="html"><![CDATA[<p>A year ago I was excited of angular and I still think angular is a game changer. I see how community charmed with angular and how easy to start building webapps apps with it. However after a year of using angular I must say that I am not recommending investing time into this framework. I will write several posts about why.</p>
 <ul>
-<li><a href="/2014/02/angularjs-is-evil-dependency--injection/">Angularjs is evil: dependency injection</a></li>
+<li><a href="/2014/02/angularjs-is-evil-dependency-injection/">Angularjs is evil: dependency injection</a></li>
 <li><a href="/2014/04/angularjs-is-evil-the-scope-horror/">Angularjs is evil: the scope horror</a></li>
 <li><a href="/2014/04/angular-is-evil-overengineering/">Angularjs is evil: overengineering hell</a></li>
 </ul>
